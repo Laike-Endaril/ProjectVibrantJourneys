@@ -9,18 +9,16 @@ buildscript {
 }
 
 repositories {
-	maven {
-		name="CurseForge"
-		url="http://files.minecraftforge.net/maven/com/github/glitchfiend/biomesoplenty/BiomesOPlenty/1.12.2-7.0.1.2399/BiomesOPlenty-1.12.2-7.0.1.2399-universal.jar"
-	}
+    maven {
+        name = "CurseForge"
+        url = "http://files.minecraftforge.net/maven/com/github/glitchfiend/biomesoplenty/BiomesOPlenty/1.12.2-7.0.1.2399/BiomesOPlenty-1.12.2-7.0.1.2399-universal.jar"
+    }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
-def pvjVersion = "L-1.12.2.000"
-def mcVersion = "1.12.2"
-version = mcVersion + "-" + pvjVersion
+version = "L-1.12.2.000"
 group = "projectvibrantjourneys"
 archivesBaseName = "ProjectVibrantJourneys"
 
@@ -34,7 +32,7 @@ compileJava {
 minecraft {
     version = "1.12.2-14.23.5.2768"
     runDir = "run"
-    
+
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
@@ -42,8 +40,6 @@ minecraft {
     // simply re-run your setup task after changing the mappings to update your workspace.
     mappings = "snapshot_20171003"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
-    replace "{@pvjVersion}":pvjVersion
 }
 
 processResources {
@@ -54,11 +50,11 @@ processResources {
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
+
         // replace version and mcversion
-        expand 'version':pvjVersion, 'mcversion':project.minecraft.version
+        expand 'version': version, 'mcversion': project.minecraft.version
     }
-        
+
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
