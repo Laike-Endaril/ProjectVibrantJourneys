@@ -14,10 +14,10 @@ out
 .idea
 
 # gradle
-build
+/build
 .gradle
 
 # other
-eclipse
-run
-/libs/
+/eclipse
+/run
+/server
