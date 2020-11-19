@@ -7,11 +7,11 @@ import net.minecraft.block.material.Material;
 
 public class BlockStoneBlock extends Block
 {
-	public BlockStoneBlock(float hardness, float resistance, MapColor mapColor)
-	{
-		super(Material.ROCK);
-		this.setHardness(hardness);
-		this.setResistance(resistance);
-		this.setSoundType(SoundType.STONE);
-	}
+    public BlockStoneBlock(float hardness, float resistance, MapColor mapColor)
+    {
+        super(Material.ROCK);
+        this.setHardness(hardness);
+        this.setResistance(resistance);
+        this.setSoundType(SoundType.STONE);
+    }
 }

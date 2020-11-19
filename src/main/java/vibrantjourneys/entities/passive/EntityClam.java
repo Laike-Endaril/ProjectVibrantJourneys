@@ -1,7 +1,5 @@
 package vibrantjourneys.entities.passive;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -14,6 +12,8 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import vibrantjourneys.util.PVJLootTableList;
 
+import javax.annotation.Nullable;
+
 public class EntityClam extends EntityPVJWaterCreature
 {
     public EntityClam(World worldIn)
@@ -21,40 +21,40 @@ public class EntityClam extends EntityPVJWaterCreature
         super(worldIn);
         this.setSize(0.3F, 0.3F);
     }
-    
+
     @Override
     protected void entityInit()
     {
-    	super.entityInit();
+        super.entityInit();
     }
-    
-	@Override
+
+    @Override
     protected void initEntityAI()
     {
     }
-	
-	@Override
+
+    @Override
     protected boolean canDespawn()
     {
         return true;
     }
-	
-	@Override
+
+    @Override
     public void onEntityUpdate()
     {
-		super.onEntityUpdate();
-		if(this.getEntityWorld().getTotalWorldTime() % 80 == 0)
-		{
-			if(this.getEntityWorld().rand.nextInt(3) == 0)
-			{
-				for(int i = 0; i < 3; i++)
-				{
-					this.getEntityWorld().spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX, this.posY, this.posZ, 0, 0.1, 0);
-				}
-			}
-		}
+        super.onEntityUpdate();
+        if (this.getEntityWorld().getTotalWorldTime() % 80 == 0)
+        {
+            if (this.getEntityWorld().rand.nextInt(3) == 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    this.getEntityWorld().spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX, this.posY, this.posZ, 0, 0.1, 0);
+                }
+            }
+        }
     }
-	
+
     @Override
     public void writeEntityToNBT(NBTTagCompound compound)
     {
@@ -66,14 +66,14 @@ public class EntityClam extends EntityPVJWaterCreature
     {
         super.readEntityFromNBT(compound);
     }
-    
-	@Override
-	protected ResourceLocation getLootTable()
-	{
-		return PVJLootTableList.CLAM;
-	}
-    
-	@Override
+
+    @Override
+    protected ResourceLocation getLootTable()
+    {
+        return PVJLootTableList.CLAM;
+    }
+
+    @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
@@ -86,23 +86,23 @@ public class EntityClam extends EntityPVJWaterCreature
     {
         livingdata = super.onInitialSpawn(difficulty, livingdata);
         BlockPos pos = new BlockPos(this.getPosition());
-        while(world.getBlockState(pos).getMaterial() == Material.WATER)
+        while (world.getBlockState(pos).getMaterial() == Material.WATER)
         {
-        	pos = pos.down();
+            pos = pos.down();
         }
         this.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
-        
+
         this.rotationPitch = this.rand.nextFloat();
-        
+
         return livingdata;
     }
-	
-	@Override
+
+    @Override
     public boolean getCanSpawnHere()
     {
-		if(this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
-			return false;
-		
-		return true;
+        if (this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
+            return false;
+
+        return true;
     }
 }

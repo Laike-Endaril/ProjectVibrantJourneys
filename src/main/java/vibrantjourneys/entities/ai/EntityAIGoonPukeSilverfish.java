@@ -9,8 +9,8 @@ public class EntityAIGoonPukeSilverfish<T extends EntityMob> extends EntityAIBas
 {
     private final T entity;
     private final double moveSpeedAmp;
-    private int attackCooldown;
     private final float maxAttackDistance;
+    private int attackCooldown;
     private int attackTime;
     private int seeTime;
     private boolean strafingClockwise;
@@ -26,7 +26,7 @@ public class EntityAIGoonPukeSilverfish<T extends EntityMob> extends EntityAIBas
         this.maxAttackDistance = maxAttackDistance * maxAttackDistance;
         this.setMutexBits(3);
     }
-    
+
     @Override
     public boolean shouldExecute()
     {
@@ -72,16 +72,16 @@ public class EntityAIGoonPukeSilverfish<T extends EntityMob> extends EntityAIBas
             {
                 --this.seeTime;
             }
-            
-            this.attackTime--;
-            if(attackTime <= 0)
-            {
-            	((EntityGoon)entity).pukeSilverfish(target);
-            	attackTime = attackCooldown;
-            }
-            
 
-            if (d0 <= (double)this.maxAttackDistance && this.seeTime >= 20)
+            this.attackTime--;
+            if (attackTime <= 0)
+            {
+                ((EntityGoon) entity).pukeSilverfish(target);
+                attackTime = attackCooldown;
+            }
+
+
+            if (d0 <= (double) this.maxAttackDistance && this.seeTime >= 20)
             {
                 this.entity.getNavigator().clearPath();
                 ++this.strafingTime;
@@ -94,12 +94,12 @@ public class EntityAIGoonPukeSilverfish<T extends EntityMob> extends EntityAIBas
 
             if (this.strafingTime >= 20)
             {
-                if ((double)this.entity.getRNG().nextFloat() < 0.3D)
+                if ((double) this.entity.getRNG().nextFloat() < 0.3D)
                 {
                     this.strafingClockwise = !this.strafingClockwise;
                 }
 
-                if ((double)this.entity.getRNG().nextFloat() < 0.3D)
+                if ((double) this.entity.getRNG().nextFloat() < 0.3D)
                 {
                     this.strafingBackwards = !this.strafingBackwards;
                 }
@@ -109,11 +109,11 @@ public class EntityAIGoonPukeSilverfish<T extends EntityMob> extends EntityAIBas
 
             if (this.strafingTime > -1)
             {
-                if (d0 > (double)(this.maxAttackDistance * 0.75F))
+                if (d0 > (double) (this.maxAttackDistance * 0.75F))
                 {
                     this.strafingBackwards = false;
                 }
-                else if (d0 < (double)(this.maxAttackDistance * 0.25F))
+                else if (d0 < (double) (this.maxAttackDistance * 0.25F))
                 {
                     this.strafingBackwards = true;
                 }

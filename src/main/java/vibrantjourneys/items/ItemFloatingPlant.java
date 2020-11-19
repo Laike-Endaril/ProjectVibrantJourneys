@@ -21,18 +21,18 @@ import vibrantjourneys.blocks.plant.BlockFloatingPlant;
 
 public class ItemFloatingPlant extends ItemPVJBlock
 {
-	private Block block;
-	
-	public ItemFloatingPlant(Block block)
-	{
-		super(block);
-		this.block = block;
-	}
+    private Block block;
 
-	@Override
+    public ItemFloatingPlant(Block block)
+    {
+        super(block);
+        this.block = block;
+    }
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer playerIn, EnumHand handIn)
     {
-    	int i = world.rand.nextInt(4);
+        int i = world.rand.nextInt(4);
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         RayTraceResult raytraceresult = this.rayTrace(world, playerIn, true);
 
@@ -54,7 +54,7 @@ public class ItemFloatingPlant extends ItemPVJBlock
                 BlockPos blockpos1 = blockpos.up();
                 IBlockState iblockstate = world.getBlockState(blockpos);
 
-                if (iblockstate.getMaterial() == Material.WATER && ((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0 && world.isAirBlock(blockpos1))
+                if (iblockstate.getMaterial() == Material.WATER && ((Integer) iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0 && world.isAirBlock(blockpos1))
                 {
                     // special case for handling block placement with water lilies
                     net.minecraftforge.common.util.BlockSnapshot blocksnapshot = net.minecraftforge.common.util.BlockSnapshot.getBlockSnapshot(world, blockpos1);
@@ -69,7 +69,7 @@ public class ItemFloatingPlant extends ItemPVJBlock
 
                     if (playerIn instanceof EntityPlayerMP)
                     {
-                        CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)playerIn, blockpos1, itemstack);
+                        CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) playerIn, blockpos1, itemstack);
                     }
 
                     if (!playerIn.capabilities.isCreativeMode)

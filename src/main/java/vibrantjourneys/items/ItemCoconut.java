@@ -14,12 +14,12 @@ import vibrantjourneys.entities.item.EntityCoconut;
 
 public class ItemCoconut extends ItemPVJBlock
 {
-	public ItemCoconut(Block block)
-	{
-		super(block);
-	}
-	
-	@Override
+    public ItemCoconut(Block block)
+    {
+        super(block);
+    }
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
@@ -29,7 +29,7 @@ public class ItemCoconut extends ItemPVJBlock
             itemstack.shrink(1);
         }
 
-        worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
         if (!worldIn.isRemote)
         {

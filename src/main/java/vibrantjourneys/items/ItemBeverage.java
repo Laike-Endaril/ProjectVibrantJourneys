@@ -15,28 +15,28 @@ import net.minecraft.world.World;
 
 public class ItemBeverage extends ItemFood
 {
-	public ItemBeverage(int amount, float saturation, String effect, int duration)
-	{
-		super(amount, saturation, false);
-		if(effect != null)
-		{
-			this.setPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation(effect), duration), 1.0F);
-		}
-	}
-	
-	@Override
+    public ItemBeverage(int amount, float saturation, String effect, int duration)
+    {
+        super(amount, saturation, false);
+        if (effect != null)
+        {
+            this.setPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation(effect), duration), 1.0F);
+        }
+    }
+
+    @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
     {
         if (entityLiving instanceof EntityPlayer)
         {
-            EntityPlayer entityplayer = (EntityPlayer)entityLiving;
+            EntityPlayer entityplayer = (EntityPlayer) entityLiving;
             entityplayer.getFoodStats().addStats(this, stack);
             this.onFoodEaten(stack, worldIn, entityplayer);
             entityplayer.addStat(StatList.getObjectUseStats(this));
 
             if (entityplayer instanceof EntityPlayerMP)
             {
-                CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
+                CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entityplayer, stack);
             }
         }
 
@@ -45,7 +45,7 @@ public class ItemBeverage extends ItemFood
         return stack.isEmpty() ? new ItemStack(Items.GLASS_BOTTLE) : stack;
     }
 
-	@Override
+    @Override
     public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.DRINK;

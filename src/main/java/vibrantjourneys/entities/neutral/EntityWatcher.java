@@ -1,7 +1,5 @@
 package vibrantjourneys.entities.neutral;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -18,52 +16,54 @@ import vibrantjourneys.entities.ai.EntityAIStareAt;
 import vibrantjourneys.entities.ai.EntityWatcherAttack;
 import vibrantjourneys.util.PVJLootTableList;
 
+import javax.annotation.Nullable;
+
 public class EntityWatcher extends EntityMob
 {
     private static final DataParameter<Integer> TARGET_ENTITY = EntityDataManager.<Integer>createKey(EntityWatcher.class, DataSerializers.VARINT);
     private EntityLivingBase targetedEntity;
     private int clientSideAttackTime;
-    
-	public EntityWatcher(World world)
-	{
-		super(world);
-		this.setSize(1.0F, 1.0F);
-	}
-	
-	@Override
+
+    public EntityWatcher(World world)
+    {
+        super(world);
+        this.setSize(1.0F, 1.0F);
+    }
+
+    @Override
     protected void entityInit()
     {
         super.entityInit();
         this.dataManager.register(TARGET_ENTITY, Integer.valueOf(0));
     }
-	
-	@Override
+
+    @Override
     protected void initEntityAI()
     {
-		this.tasks.addTask(4, new EntityAIStareAt(this, EntityPlayer.class, 90.0F));
-		this.tasks.addTask(1, new EntityWatcherAttack(this));
+        this.tasks.addTask(4, new EntityAIStareAt(this, EntityPlayer.class, 90.0F));
+        this.tasks.addTask(1, new EntityWatcherAttack(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
     }
-	
-	@Override
+
+    @Override
     public float getEyeHeight()
     {
         return this.height * 0.5F;
     }
 
-	@Override
+    @Override
     public void onUpdate()
     {
-		super.onUpdate();
-		//watchers don't move
-		this.motionY = 0.0;
+        super.onUpdate();
+        //watchers don't move
+        this.motionY = 0.0;
     }
-	
-	@Override
+
+    @Override
     public void onLivingUpdate()
     {
-		super.onLivingUpdate();
-		
+        super.onLivingUpdate();
+
         if (this.world.isRemote)
         {
             if (this.hasTargetedEntity())
@@ -74,35 +74,30 @@ public class EntityWatcher extends EntityMob
                 }
                 else
                 {
-                	this.clientSideAttackTime = 0;
+                    this.clientSideAttackTime = 0;
                 }
             }
         }
     }
-	
+
     public float getAttackAnimationScale()
     {
-        return ((float)this.clientSideAttackTime) / (float)this.getAttackDuration();
+        return ((float) this.clientSideAttackTime) / (float) this.getAttackDuration();
     }
-	
-	@Override
+
+    @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(90.0D);
     }
-	
-    public void setTargetedEntity(int entityId)
-    {
-        this.dataManager.set(TARGET_ENTITY, Integer.valueOf(entityId));
-    }
 
     public boolean hasTargetedEntity()
     {
-        return ((Integer)this.dataManager.get(TARGET_ENTITY)).intValue() != 0;
+        return ((Integer) this.dataManager.get(TARGET_ENTITY)).intValue() != 0;
     }
-    
+
     @Nullable
     public EntityLivingBase getTargetedEntity()
     {
@@ -118,11 +113,11 @@ public class EntityWatcher extends EntityMob
             }
             else
             {
-                Entity entity = this.world.getEntityByID(((Integer)this.dataManager.get(TARGET_ENTITY)).intValue());
+                Entity entity = this.world.getEntityByID(((Integer) this.dataManager.get(TARGET_ENTITY)).intValue());
 
                 if (entity instanceof EntityLivingBase)
                 {
-                    this.targetedEntity = (EntityLivingBase)entity;
+                    this.targetedEntity = (EntityLivingBase) entity;
                     return this.targetedEntity;
                 }
                 else
@@ -136,18 +131,23 @@ public class EntityWatcher extends EntityMob
             return this.getAttackTarget();
         }
     }
-    
+
+    public void setTargetedEntity(int entityId)
+    {
+        this.dataManager.set(TARGET_ENTITY, Integer.valueOf(entityId));
+    }
+
     public int getAttackDuration()
     {
         return 70;
     }
-    
-	@Override
-	protected ResourceLocation getLootTable()
-	{
-		return PVJLootTableList.WATCHER;
-	}
-    
+
+    @Override
+    protected ResourceLocation getLootTable()
+    {
+        return PVJLootTableList.WATCHER;
+    }
+
     @Override
     public void notifyDataManagerChange(DataParameter<?> key)
     {
@@ -159,10 +159,10 @@ public class EntityWatcher extends EntityMob
             this.targetedEntity = null;
         }
     }
-	
-	@Override
+
+    @Override
     public boolean getCanSpawnHere()
     {
-		return world.isAirBlock(new BlockPos(this.posX, this.posY, this.posZ));
+        return world.isAirBlock(new BlockPos(this.posX, this.posY, this.posZ));
     }
 }

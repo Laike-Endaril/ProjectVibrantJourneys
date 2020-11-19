@@ -10,19 +10,19 @@ public class EntityBeachStarfish extends EntityStarfish
 {
     public EntityBeachStarfish(World world)
     {
-		super(world);
-	}
-	
-	@Override
+        super(world);
+    }
+
+    @Override
     public boolean getCanSpawnHere()
     {
-		if(this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
-			return false;
-		
-		Block block = this.getEntityWorld().getBlockState(this.getPosition().down()).getBlock();
-		if(block != Blocks.SAND && block != Blocks.STONE) //sometimes i forget that stone beaches are a biome
-			return false;
-		
-		return this.getEntityWorld().isSideSolid(this.getPosition().down(), EnumFacing.UP);
+        if (this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
+            return false;
+
+        Block block = this.getEntityWorld().getBlockState(this.getPosition().down()).getBlock();
+        if (block != Blocks.SAND && block != Blocks.STONE) //sometimes i forget that stone beaches are a biome
+            return false;
+
+        return this.getEntityWorld().isSideSolid(this.getPosition().down(), EnumFacing.UP);
     }
 }

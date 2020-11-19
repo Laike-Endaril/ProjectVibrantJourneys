@@ -89,11 +89,11 @@ public class ModelCoyote extends ModelBase
             this.coyoteMane.render(scale);
         }
     }
-    
+
     @Override
     public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime)
     {
-        EntityCoyote EntityCoyote = (EntityCoyote)entitylivingbaseIn;
+        EntityCoyote EntityCoyote = (EntityCoyote) entitylivingbaseIn;
 
         if (EntityCoyote.isAngry())
         {
@@ -107,15 +107,15 @@ public class ModelCoyote extends ModelBase
         if (EntityCoyote.isSitting())
         {
             this.coyoteMane.setRotationPoint(-1.0F, 16.0F, -3.0F);
-            this.coyoteMane.rotateAngleX = ((float)Math.PI * 2F / 5F);
+            this.coyoteMane.rotateAngleX = ((float) Math.PI * 2F / 5F);
             this.coyoteMane.rotateAngleY = 0.0F;
             this.coyoteBody.setRotationPoint(0.0F, 18.0F, 0.0F);
-            this.coyoteBody.rotateAngleX = ((float)Math.PI / 4F);
+            this.coyoteBody.rotateAngleX = ((float) Math.PI / 4F);
             this.coyoteTail.setRotationPoint(-1.0F, 21.0F, 6.0F);
             this.coyoteLeg1.setRotationPoint(-2.5F, 22.0F, 2.0F);
-            this.coyoteLeg1.rotateAngleX = ((float)Math.PI * 3F / 2F);
+            this.coyoteLeg1.rotateAngleX = ((float) Math.PI * 3F / 2F);
             this.coyoteLeg2.setRotationPoint(0.5F, 22.0F, 2.0F);
-            this.coyoteLeg2.rotateAngleX = ((float)Math.PI * 3F / 2F);
+            this.coyoteLeg2.rotateAngleX = ((float) Math.PI * 3F / 2F);
             this.coyoteLeg3.rotateAngleX = 5.811947F;
             this.coyoteLeg3.setRotationPoint(-2.49F, 17.0F, -4.0F);
             this.coyoteLeg4.rotateAngleX = 5.811947F;
@@ -124,7 +124,7 @@ public class ModelCoyote extends ModelBase
         else
         {
             this.coyoteBody.setRotationPoint(0.0F, 14.0F, 2.0F);
-            this.coyoteBody.rotateAngleX = ((float)Math.PI / 2F);
+            this.coyoteBody.rotateAngleX = ((float) Math.PI / 2F);
             this.coyoteMane.setRotationPoint(-1.0F, 14.0F, -3.0F);
             this.coyoteMane.rotateAngleX = this.coyoteBody.rotateAngleX;
             this.coyoteTail.setRotationPoint(-1.0F, 12.0F, 8.0F);
@@ -133,8 +133,8 @@ public class ModelCoyote extends ModelBase
             this.coyoteLeg3.setRotationPoint(-2.5F, 16.0F, -4.0F);
             this.coyoteLeg4.setRotationPoint(0.5F, 16.0F, -4.0F);
             this.coyoteLeg1.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-            this.coyoteLeg2.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-            this.coyoteLeg3.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+            this.coyoteLeg2.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+            this.coyoteLeg3.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
             this.coyoteLeg4.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         }
 

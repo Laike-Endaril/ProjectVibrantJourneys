@@ -8,33 +8,33 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityPVJWaterCreature extends EntityWaterMob
 {
-	public EntityPVJWaterCreature(World world)
-	{
-		super(world);
-	}
+    public EntityPVJWaterCreature(World world)
+    {
+        super(world);
+    }
 
-	@Override
+    @Override
     protected int getExperiencePoints(EntityPlayer player)
     {
         return 0;
     }
-	
-	@Override
+
+    @Override
     public void onEntityUpdate()
     {
-		super.onEntityUpdate();
-		if(this.getAir() < 0)
-			this.setAir(0);	
+        super.onEntityUpdate();
+        if (this.getAir() < 0)
+            this.setAir(0);
     }
-	
+
     @SideOnly(Side.CLIENT)
     @Override
     public boolean isInRangeToRenderDist(double distance)
     {
-    	return true;
+        return true;
     }
-	
-	@Override
+
+    @Override
     public float getEyeHeight()
     {
         return this.height;

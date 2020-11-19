@@ -26,13 +26,13 @@ public class RenderGoon extends RenderBiped<EntityGoon>
     {
         return GOON_TEXTURES;
     }
-    
+
     @Override
     protected void preRenderCallback(EntityGoon entitylivingbaseIn, float partialTickTime)
     {
         GlStateManager.scale(0.85F, 0.85F, 0.85F);
     }
-    
+
     public static class Factory implements IRenderFactory<EntityGoon>
     {
         @Override

@@ -35,7 +35,7 @@ public class RenderDuck extends RenderLiving<EntityDuck>
         float f1 = duck.oFlapSpeed + (duck.destPos - duck.oFlapSpeed) * partialTicks;
         return (MathHelper.sin(f) + 1.0F) * f1;
     }
-    
+
     public static class Factory implements IRenderFactory<EntityDuck>
     {
         @Override

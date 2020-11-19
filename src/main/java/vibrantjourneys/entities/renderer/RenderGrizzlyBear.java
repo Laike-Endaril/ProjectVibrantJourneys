@@ -40,7 +40,7 @@ public class RenderGrizzlyBear extends RenderLiving<EntityGrizzlyBear>
         GlStateManager.scale(1.2F, 1.2F, 1.2F);
         super.preRenderCallback(entitylivingbaseIn, partialTickTime);
     }
-    
+
     public static class Factory implements IRenderFactory<EntityGrizzlyBear>
     {
         @Override

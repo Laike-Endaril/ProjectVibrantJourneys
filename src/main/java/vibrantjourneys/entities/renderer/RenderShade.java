@@ -36,7 +36,7 @@ public class RenderShade extends RenderBiped<EntityShade>
     {
         return texture;
     }
-    
+
     public static class Factory implements IRenderFactory<EntityShade>
     {
         @Override

@@ -8,19 +8,19 @@ import net.minecraft.util.ResourceLocation;
 
 public class StateMapperIntegration extends StateMapperBase
 {
-	private String modid;
-	
-	public StateMapperIntegration(String modid)
-	{
-		this.modid = modid;
-	}
-	
-	@Override
-	protected ModelResourceLocation getModelResourceLocation(IBlockState state)
-	{
-		ResourceLocation rl = Block.REGISTRY.getNameForObject(state.getBlock());
-		ModelResourceLocation mrl = new ModelResourceLocation(Reference.MOD_ID + ":" + modid + "/" + rl.getPath());
-		return mrl;
-	}
+    private String modid;
+
+    public StateMapperIntegration(String modid)
+    {
+        this.modid = modid;
+    }
+
+    @Override
+    protected ModelResourceLocation getModelResourceLocation(IBlockState state)
+    {
+        ResourceLocation rl = Block.REGISTRY.getNameForObject(state.getBlock());
+        ModelResourceLocation mrl = new ModelResourceLocation(Reference.MOD_ID + ":" + modid + "/" + rl.getResourcePath());
+        return mrl;
+    }
 
 }

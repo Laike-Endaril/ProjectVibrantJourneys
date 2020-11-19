@@ -36,7 +36,7 @@ public class RenderGhost extends RenderBiped<EntityGhost>
     {
         return texture;
     }
-    
+
     public static class Factory implements IRenderFactory<EntityGhost>
     {
         @Override

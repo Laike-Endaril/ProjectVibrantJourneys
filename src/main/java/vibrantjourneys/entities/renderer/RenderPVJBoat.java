@@ -14,7 +14,7 @@ import vibrantjourneys.entities.renderer.models.ModelPVJBoat;
 
 @SideOnly(Side.CLIENT)
 public class RenderPVJBoat extends Render<EntityPVJBoat>
-{   
+{
     protected ModelBase modelBoat = new ModelPVJBoat();
 
     public RenderPVJBoat(RenderManager renderManagerIn)
@@ -51,7 +51,7 @@ public class RenderPVJBoat extends Render<EntityPVJBoat>
     public void setupRotation(EntityPVJBoat p_188311_1_, float p_188311_2_, float p_188311_3_)
     {
         GlStateManager.rotate(180.0F - p_188311_2_, 0.0F, 1.0F, 0.0F);
-        float f = (float)p_188311_1_.getTimeSinceHit() - p_188311_3_;
+        float f = (float) p_188311_1_.getTimeSinceHit() - p_188311_3_;
         float f1 = p_188311_1_.getDamageTaken() - p_188311_3_;
 
         if (f1 < 0.0F)
@@ -61,7 +61,7 @@ public class RenderPVJBoat extends Render<EntityPVJBoat>
 
         if (f > 0.0F)
         {
-            GlStateManager.rotate(MathHelper.sin(f) * f * f1 / 10.0F * (float)p_188311_1_.getForwardDirection(), 1.0F, 0.0F, 0.0F);
+            GlStateManager.rotate(MathHelper.sin(f) * f * f1 / 10.0F * (float) p_188311_1_.getForwardDirection(), 1.0F, 0.0F, 0.0F);
         }
 
         GlStateManager.scale(-1.0F, -1.0F, 1.0F);
@@ -69,12 +69,12 @@ public class RenderPVJBoat extends Render<EntityPVJBoat>
 
     public void setupTranslation(double p_188309_1_, double p_188309_3_, double p_188309_5_)
     {
-        GlStateManager.translate((float)p_188309_1_, (float)p_188309_3_ + 0.375F, (float)p_188309_5_);
+        GlStateManager.translate((float) p_188309_1_, (float) p_188309_3_ + 0.375F, (float) p_188309_5_);
     }
 
     protected ResourceLocation getEntityTexture(EntityPVJBoat entity)
     {
-    	return new ResourceLocation("pvj:textures/entity/boat/boat_" + entity.getPVJBoatType().getName() + ".png");
+        return new ResourceLocation("pvj:textures/entity/boat/boat_" + entity.getPVJBoatType().getName() + ".png");
     }
 
     public boolean isMultipass()
@@ -88,7 +88,7 @@ public class RenderPVJBoat extends Render<EntityPVJBoat>
         this.setupTranslation(p_188300_2_, p_188300_4_, p_188300_6_);
         this.setupRotation(p_188300_1_, p_188300_8_, p_188300_9_);
         this.bindEntityTexture(p_188300_1_);
-        ((IMultipassModel)this.modelBoat).renderMultipass(p_188300_1_, p_188300_9_, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        ((IMultipassModel) this.modelBoat).renderMultipass(p_188300_1_, p_188300_9_, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
         GlStateManager.popMatrix();
     }
 }

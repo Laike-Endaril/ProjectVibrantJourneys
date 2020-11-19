@@ -25,7 +25,7 @@ public class RenderSkeletalKnight extends RenderSkeleton
     {
         return SKELETON_TEXTURES;
     }
-    
+
     public static class Factory implements IRenderFactory<EntitySkeletalKnight>
     {
         @Override

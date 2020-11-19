@@ -36,7 +36,7 @@ public class EntityWatcherAttack extends EntityAIBase
     public void resetTask()
     {
         this.watcher.setTargetedEntity(0);
-        this.watcher.setAttackTarget((EntityLivingBase)null);
+        this.watcher.setAttackTarget((EntityLivingBase) null);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class EntityWatcherAttack extends EntityAIBase
 
         if (!this.watcher.canEntityBeSeen(entitylivingbase))
         {
-            this.watcher.setAttackTarget((EntityLivingBase)null);
+            this.watcher.setAttackTarget((EntityLivingBase) null);
         }
         else
         {
@@ -62,7 +62,7 @@ public class EntityWatcherAttack extends EntityAIBase
             {
 
                 entitylivingbase.attackEntityFrom(DamageSource.causeMobDamage(this.watcher),
-                		(float)this.watcher.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
+                        (float) this.watcher.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
                 tickCounter = 0;
             }
 

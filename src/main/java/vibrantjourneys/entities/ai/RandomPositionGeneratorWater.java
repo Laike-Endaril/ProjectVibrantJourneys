@@ -1,14 +1,13 @@
 package vibrantjourneys.entities.ai;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import vibrantjourneys.entities.passive.EntityPVJWaterCreature;
+
+import javax.annotation.Nullable;
+import java.util.Random;
 
 public class RandomPositionGeneratorWater
 {
@@ -20,13 +19,13 @@ public class RandomPositionGeneratorWater
     @Nullable
     public static Vec3d findRandomTarget(EntityPVJWaterCreature EntityPVJWaterCreatureIn, int xz, int y)
     {
-        return findRandomTargetBlock(EntityPVJWaterCreatureIn, xz, y, (Vec3d)null);
+        return findRandomTargetBlock(EntityPVJWaterCreatureIn, xz, y, (Vec3d) null);
     }
 
     @Nullable
     public static Vec3d getLandPos(EntityPVJWaterCreature p_191377_0_, int p_191377_1_, int p_191377_2_)
     {
-        return generateRandomPos(p_191377_0_, p_191377_1_, p_191377_2_, (Vec3d)null, false);
+        return generateRandomPos(p_191377_0_, p_191377_1_, p_191377_2_, (Vec3d) null, false);
     }
 
     /**
@@ -80,10 +79,10 @@ public class RandomPositionGeneratorWater
             int i1 = random.nextInt(2 * y + 1) - y;
             int j1 = random.nextInt(2 * xy + 1) - xy;
 
-            if (p_191379_3_ == null || (double)l * p_191379_3_.x + (double)j1 * p_191379_3_.z >= 0.0D)
+            if (p_191379_3_ == null || (double) l * p_191379_3_.x + (double) j1 * p_191379_3_.z >= 0.0D)
             {
 
-                BlockPos blockpos1 = new BlockPos((double)l + entity.posX, (double)i1 + entity.posY, (double)j1 + entity.posZ);
+                BlockPos blockpos1 = new BlockPos((double) l + entity.posX, (double) i1 + entity.posY, (double) j1 + entity.posZ);
 
                 if (!flag && pathnavigate.canEntityStandOnPos(blockpos1))
                 {
@@ -113,7 +112,7 @@ public class RandomPositionGeneratorWater
 
         if (flag1)
         {
-            return new Vec3d((double)k1 + entity.posX, (double)i + entity.posY, (double)j + entity.posZ);
+            return new Vec3d((double) k1 + entity.posX, (double) i + entity.posY, (double) j + entity.posZ);
         }
         else
         {

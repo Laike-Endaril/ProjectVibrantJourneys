@@ -24,7 +24,7 @@ public class RenderCoyote extends RenderLiving<EntityCoyote>
         super(manager, new ModelCoyote(), 0.5F);
         this.addLayer(new LayerCoyoteCollar(this));
     }
-    
+
     @Override
     protected float handleRotationFloat(EntityCoyote livingBase, float partialTicks)
     {
@@ -42,11 +42,11 @@ public class RenderCoyote extends RenderLiving<EntityCoyote>
 
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
-    
+
     @Override
     protected void preRenderCallback(EntityCoyote entitylivingbaseIn, float partialTickTime)
     {
-    	GlStateManager.scale(0.9F, 0.9F, 0.9F);
+        GlStateManager.scale(0.9F, 0.9F, 0.9F);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class RenderCoyote extends RenderLiving<EntityCoyote>
             return entity.isAngry() ? ANGRY_BOI : COYOTE;
         }
     }
-    
+
     public static class Factory implements IRenderFactory<EntityCoyote>
     {
         @Override

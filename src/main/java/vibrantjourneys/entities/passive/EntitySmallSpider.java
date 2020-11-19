@@ -39,7 +39,7 @@ public class EntitySmallSpider extends EntityCritter
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.06D);
     }
-    
+
     @Override
     public void setInWeb()
     {
@@ -51,25 +51,25 @@ public class EntitySmallSpider extends EntityCritter
     {
         return EnumCreatureAttribute.ARTHROPOD;
     }
-    
-	@Override
+
+    @Override
     public boolean getCanSpawnHere()
     {
-		if(this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
-			return false;
-		
+        if (this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
+            return false;
+
         Biome biome = world.getBiomeForCoordsBody(this.getPosition());
-        if(BiomeDictionary.hasType(biome, Type.SNOWY))
-        	return false;
-        
-        if(Reference.isSereneSeasonsLoaded)
-        	if(PVJSereneSeasons.canSnowHere(getEntityWorld(), getPosition()))
-        		return false;
-        
-		Block block = this.getEntityWorld().getBlockState(this.getPosition().down()).getBlock();
-		if(block != Blocks.GRASS)
-			return false;
-        
-		return super.getCanSpawnHere();
+        if (BiomeDictionary.hasType(biome, Type.SNOWY))
+            return false;
+
+        if (Reference.isSereneSeasonsLoaded)
+            if (PVJSereneSeasons.canSnowHere(getEntityWorld(), getPosition()))
+                return false;
+
+        Block block = this.getEntityWorld().getBlockState(this.getPosition().down()).getBlock();
+        if (block != Blocks.GRASS)
+            return false;
+
+        return super.getCanSpawnHere();
     }
 }

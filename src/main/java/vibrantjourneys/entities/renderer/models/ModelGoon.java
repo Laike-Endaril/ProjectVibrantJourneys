@@ -16,7 +16,8 @@ public class ModelGoon extends ModelBiped
     public ModelRenderer bipedBody;
     public ModelRenderer bipedHead;
 
-    public ModelGoon() {
+    public ModelGoon()
+    {
         this.textureWidth = 64;
         this.textureHeight = 64;
         this.bipedRightLeg = new ModelRenderer(this, 0, 16);
@@ -49,7 +50,7 @@ public class ModelGoon extends ModelBiped
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-    { 
+    {
         this.bipedRightLeg.render(f5);
         this.bipedLeftLeg.render(f5);
         this.bipedHeadwear.render(f5);
@@ -58,17 +59,17 @@ public class ModelGoon extends ModelBiped
         this.bipedHead.render(f5);
         this.bipedBody.render(f5);
     }
-    
+
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
     {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
-        boolean flag = entityIn instanceof EntityLivingBase && ((EntityLivingBase)entityIn).getTicksElytraFlying() > 4;
+        boolean flag = entityIn instanceof EntityLivingBase && ((EntityLivingBase) entityIn).getTicksElytraFlying() > 4;
         this.bipedHead.rotateAngleY = netHeadYaw * 0.017453292F;
 
         if (flag)
         {
-            this.bipedHead.rotateAngleX = -((float)Math.PI / 4F);
+            this.bipedHead.rotateAngleX = -((float) Math.PI / 4F);
         }
         else
         {
@@ -79,7 +80,7 @@ public class ModelGoon extends ModelBiped
 
         if (flag)
         {
-            f = (float)(entityIn.motionX * entityIn.motionX + entityIn.motionY * entityIn.motionY + entityIn.motionZ * entityIn.motionZ);
+            f = (float) (entityIn.motionX * entityIn.motionX + entityIn.motionY * entityIn.motionY + entityIn.motionZ * entityIn.motionZ);
             f = f / 0.2F;
             f = f * f * f;
         }
@@ -89,7 +90,7 @@ public class ModelGoon extends ModelBiped
             f = 1.0F;
         }
         this.bipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount / f;
-        this.bipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount / f;
+        this.bipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount / f;
         this.bipedRightLeg.rotateAngleY = 0.0F;
         this.bipedLeftLeg.rotateAngleY = 0.0F;
         this.bipedRightLeg.rotateAngleZ = 0.0F;

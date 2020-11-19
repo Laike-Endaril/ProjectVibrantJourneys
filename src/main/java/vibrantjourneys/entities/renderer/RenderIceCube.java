@@ -24,14 +24,14 @@ public class RenderIceCube extends RenderLiving<EntityIceCube>
     public void doRender(EntityIceCube entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
-        this.shadowSize = 0.25F * (float)entity.getSlimeSize();
+        this.shadowSize = 0.25F * (float) entity.getSlimeSize();
     }
 
     @Override
     protected void preRenderCallback(EntityIceCube entitylivingbaseIn, float partialTickTime)
     {
         GlStateManager.scale(0.999F, 0.999F, 0.999F);
-        float f1 = (float)entitylivingbaseIn.getSlimeSize();
+        float f1 = (float) entitylivingbaseIn.getSlimeSize();
         float f2 = (entitylivingbaseIn.prevSquishFactor + (entitylivingbaseIn.squishFactor - entitylivingbaseIn.prevSquishFactor) * partialTickTime) / (f1 * 0.5F + 1.0F);
         float f3 = 1.0F / (f2 + 1.0F);
         GlStateManager.scale(f3 * f1, 1.0F / f3 * f1, f3 * f1);
@@ -42,7 +42,7 @@ public class RenderIceCube extends RenderLiving<EntityIceCube>
     {
         return TEXTURE;
     }
-    
+
     public static class Factory implements IRenderFactory<EntityIceCube>
     {
         @Override

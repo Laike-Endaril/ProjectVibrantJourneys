@@ -30,7 +30,7 @@ public class RenderStarfish extends RenderLiving<EntityStarfish>
     {
         return new ResourceLocation(Reference.MOD_ID, "textures/entity/starfish/starfish_" + entity.getColor() + ".png");
     }
-    
+
     public static class Factory implements IRenderFactory<EntityStarfish>
     {
         @Override

@@ -6,10 +6,10 @@ import net.minecraft.block.material.Material;
 
 public class BlockCrackedSand extends Block
 {
-	public BlockCrackedSand()
-	{
-		super(Material.ROCK);
-		this.setHardness(0.85F);
-		this.setSoundType(SoundType.STONE);
-	}
+    public BlockCrackedSand()
+    {
+        super(Material.ROCK);
+        this.setHardness(0.85F);
+        this.setSoundType(SoundType.STONE);
+    }
 }

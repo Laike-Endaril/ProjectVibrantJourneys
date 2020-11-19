@@ -1,12 +1,6 @@
 package vibrantjourneys.biomes;
 
-import java.util.Random;
-
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockOldLeaf;
-import net.minecraft.block.BlockOldLog;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockTallGrass;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -16,21 +10,17 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenCanopyTree;
-import net.minecraft.world.gen.feature.WorldGenShrub;
-import net.minecraft.world.gen.feature.WorldGenTallGrass;
-import net.minecraft.world.gen.feature.WorldGenTrees;
-import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraft.world.gen.feature.*;
+
+import java.util.Random;
 
 public class BiomeOvergrownSpires extends Biome
 {
+    protected static final IBlockState GRASS = Blocks.GRASS.getDefaultState();
+    protected static final WorldGenCanopyTree ROOF_TREE = new WorldGenCanopyTree(false);
     private static final IBlockState JUNGLE_LOG = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE);
     private static final IBlockState JUNGLE_LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
     private static final IBlockState OAK_LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-    protected static final IBlockState GRASS = Blocks.GRASS.getDefaultState();
-    protected static final WorldGenCanopyTree ROOF_TREE = new WorldGenCanopyTree(false);
-    
     private long worldSeed;
     private NoiseGeneratorPerlin pillarNoise;
     private NoiseGeneratorPerlin pillarRoofNoise;
@@ -49,17 +39,17 @@ public class BiomeOvergrownSpires extends Biome
     @Override
     public WorldGenAbstractTree getRandomTreeFeature(Random rand)
     {
-    	int num = rand.nextInt(100);
-    	if(num > 80)
-    		return TREE_FEATURE;
-    	else if(num > 60)
-    		return new WorldGenShrub(JUNGLE_LOG, OAK_LEAF);
-    	else if(num > 35)
-    		return (WorldGenAbstractTree)(new WorldGenTrees(false, 4 + rand.nextInt(7), JUNGLE_LOG, JUNGLE_LEAF, true));
-    	else if(num > 10)
-    		return ROOF_TREE;
-    	else
-    		return BIG_TREE_FEATURE;
+        int num = rand.nextInt(100);
+        if (num > 80)
+            return TREE_FEATURE;
+        else if (num > 60)
+            return new WorldGenShrub(JUNGLE_LOG, OAK_LEAF);
+        else if (num > 35)
+            return (WorldGenAbstractTree) (new WorldGenTrees(false, 4 + rand.nextInt(7), JUNGLE_LOG, JUNGLE_LEAF, true));
+        else if (num > 10)
+            return ROOF_TREE;
+        else
+            return BIG_TREE_FEATURE;
     }
 
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
@@ -75,11 +65,11 @@ public class BiomeOvergrownSpires extends Biome
         double d4 = 0.0D;
         int i = (x & -16) + (z & 15);
         int j = (z & -16) + (x & 15);
-        double d0 = Math.min(Math.abs(noiseVal), this.pillarNoise.getValue((double)i * 0.25D, (double)j * 0.25D));
+        double d0 = Math.min(Math.abs(noiseVal), this.pillarNoise.getValue((double) i * 0.25D, (double) j * 0.25D));
 
         if (d0 > 0.0D)
         {
-            double d2 = Math.abs(this.pillarRoofNoise.getValue((double)i * 0.001953125D, (double)j * 0.001953125D));
+            double d2 = Math.abs(this.pillarRoofNoise.getValue((double) i * 0.001953125D, (double) j * 0.001953125D));
             d4 = d0 * d0 * 2.5D;
             double d3 = Math.ceil(d2 * 50.0D) + 14.0D;
 
@@ -95,12 +85,12 @@ public class BiomeOvergrownSpires extends Biome
         int l1 = z & 15;
         int i2 = worldIn.getSeaLevel();
         IBlockState iblockstate = this.fillerBlock;
-        int k = (int)(noiseVal / 3.0D + 3.0D + rand.nextDouble() * 0.25D);
+        int k = (int) (noiseVal / 3.0D + 3.0D + rand.nextDouble() * 0.25D);
         int l = -1;
 
         for (int j1 = 255; j1 >= 0; --j1)
         {
-            if (chunkPrimerIn.getBlockState(l1, j1, k1).getMaterial() == Material.AIR && j1 < (int)d4)
+            if (chunkPrimerIn.getBlockState(l1, j1, k1).getMaterial() == Material.AIR && j1 < (int) d4)
             {
                 chunkPrimerIn.setBlockState(l1, j1, k1, STONE);
             }
@@ -156,7 +146,7 @@ public class BiomeOvergrownSpires extends Biome
             }
         }
     }
-    
+
     @Override
     public WorldGenerator getRandomWorldGenForGrass(Random rand)
     {

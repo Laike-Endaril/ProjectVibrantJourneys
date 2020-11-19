@@ -36,7 +36,7 @@ public class RenderBanshee extends RenderBiped<EntityBanshee>
     {
         return texture;
     }
-    
+
     public static class Factory implements IRenderFactory<EntityBanshee>
     {
         @Override

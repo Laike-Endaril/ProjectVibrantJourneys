@@ -4,7 +4,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelStarfish extends ModelBase {
+public class ModelStarfish extends ModelBase
+{
     public ModelRenderer body1;
     public ModelRenderer body2;
     public ModelRenderer body3;
@@ -38,7 +39,8 @@ public class ModelStarfish extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+    {
         this.body5.render(f5);
         this.body3.render(f5);
         this.body4.render(f5);
@@ -46,7 +48,8 @@ public class ModelStarfish extends ModelBase {
         this.body2.render(f5);
     }
 
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z)
+    {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;

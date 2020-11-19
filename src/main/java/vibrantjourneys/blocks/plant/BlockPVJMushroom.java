@@ -10,13 +10,13 @@ import net.minecraft.world.World;
 
 public class BlockPVJMushroom extends BlockMushroom
 {
-	public BlockPVJMushroom()
-	{
-		this.setTickRandomly(true);
-		this.setSoundType(SoundType.PLANT);
-	}
-	
-	@Override
+    public BlockPVJMushroom()
+    {
+        this.setTickRandomly(true);
+        this.setSoundType(SoundType.PLANT);
+    }
+
+    @Override
     public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
     {
         if (pos.getY() >= 0 && pos.getY() < 256)

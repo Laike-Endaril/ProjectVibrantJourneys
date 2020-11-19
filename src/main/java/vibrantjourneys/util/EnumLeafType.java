@@ -20,55 +20,55 @@ public enum EnumLeafType
     WHITE_CHERRY_BLOSSOM(13, "white_cherry_blossom", EnumWoodType.CHERRY_BLOSSOM, PVJConfig.worldgen.fallenLeavesWhiteCherryBlossomDensity, PVJConfig.worldgen.whiteCherryBlossomTwigsDensity),
     PINK_CHERRY_BLOSSOM(14, "pink_cherry_blossom", EnumWoodType.CHERRY_BLOSSOM, PVJConfig.worldgen.fallenLeavesPinkCherryBlossomDensity, PVJConfig.worldgen.pinkCherryBlossomTwigsDensity),
     JACARANDA(15, "jacaranda", EnumWoodType.JACARANDA, PVJConfig.worldgen.fallenLeavesJacarandaDensity, PVJConfig.worldgen.jacarandaTwigsDensity);
-    
+
     private String name;
     private int id;
     private EnumWoodType woodType;
     private int fallenLeavesDensity;
     private int twigsDensity;
-    
+
     private EnumLeafType(int id, String name, EnumWoodType woodType, int fallenLeavesDensity, int twigsDensity)
     {
-    	this.name = name;
-    	this.id = id;
-    	this.woodType = woodType;
-    	this.fallenLeavesDensity = fallenLeavesDensity;
-    	this.twigsDensity = twigsDensity;
+        this.name = name;
+        this.id = id;
+        this.woodType = woodType;
+        this.fallenLeavesDensity = fallenLeavesDensity;
+        this.twigsDensity = twigsDensity;
     }
-    
+
     public String getName()
     {
-    	return name;
+        return name;
     }
-    
+
     public int getID()
     {
-    	return id;
+        return id;
     }
-    
+
     public EnumWoodType getWoodType()
     {
-    	return woodType;
+        return woodType;
     }
-    
+
     /**
      * Returns -1 for trees that have no associated fallen leaves
      */
     public int getFallenLeavesDensity()
     {
-    	return fallenLeavesDensity;
+        return fallenLeavesDensity;
     }
-    
+
     /**
      * Returns -1 for trees that have no associated twigs
      */
     public int getTwigsDensity()
     {
-    	return twigsDensity;
+        return twigsDensity;
     }
-    
+
     public Biome[] getTreeBiomes()
     {
-    	return woodType.getTreeBiomes();
+        return woodType.getTreeBiomes();
     }
 }

@@ -10,20 +10,20 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockPVJPlant extends BlockBush
 {
-	public BlockPVJPlant()
-	{
-		super(Material.PLANTS);
-		this.setHardness(0.0F);
-		this.setSoundType(SoundType.PLANT);
-	}
-	
-	@Override
+    public BlockPVJPlant()
+    {
+        super(Material.PLANTS);
+        this.setHardness(0.0F);
+        this.setSoundType(SoundType.PLANT);
+    }
+
+    @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
-    	return Blocks.SAPLING.getFlammability(world, pos, face);
+        return Blocks.SAPLING.getFlammability(world, pos, face);
     }
-	
-	@Override
+
+    @Override
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
         return Blocks.SAPLING.getFireSpreadSpeed(world, pos, face);

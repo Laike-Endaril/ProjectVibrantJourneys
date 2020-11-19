@@ -35,11 +35,11 @@ public class ModelWatcher extends ModelBase
         GlStateManager.translate(0.0F, 0.001F, 0.0F);
         this.body.render(scale);
     }
-    
+
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
     {
         this.body.rotateAngleY = netHeadYaw * 0.017453292F;
         this.body.rotateAngleX = headPitch * 0.017453292F;
     }
-        
+
 }

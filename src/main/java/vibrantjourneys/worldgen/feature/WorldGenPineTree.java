@@ -1,7 +1,5 @@
 package vibrantjourneys.worldgen.feature;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +11,8 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.util.EnumLeafType;
 import vibrantjourneys.util.EnumWoodType;
+
+import java.util.Random;
 
 public class WorldGenPineTree extends WorldGenAbstractTree
 {
@@ -30,7 +30,7 @@ public class WorldGenPineTree extends WorldGenAbstractTree
         int height = 9 + rand.nextInt(4);
         int j = 1 + rand.nextInt(2);
         int l = 3 + rand.nextInt(2);
-        
+
         boolean flag = true;
 
         if (position.getY() >= 1 && position.getY() + height + 1 <= world.getHeight())
@@ -81,57 +81,57 @@ public class WorldGenPineTree extends WorldGenAbstractTree
                 IBlockState state = world.getBlockState(down);
                 int p = 6 + rand.nextInt(2);
 
-                if (state.getBlock().canSustainPlant(state, world, down, net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling)Blocks.SAPLING) && position.getY() < world.getHeight() - height - 1)
+                if (state.getBlock().canSustainPlant(state, world, down, net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling) Blocks.SAPLING) && position.getY() < world.getHeight() - height - 1)
                 {
                     state.getBlock().onPlantGrow(state, world, down, position);
                     int branch = 1;
-                    
-                    for(int i = 0; i <= height; i++)
+
+                    for (int i = 0; i <= height; i++)
                     {
-                    	int y = position.getY() + height - i;
-                    	int y1 = height - i;
-                    	BlockPos pos = new BlockPos(position.getX(), y, position.getZ());
-                    	state = world.getBlockState(pos);
+                        int y = position.getY() + height - i;
+                        int y1 = height - i;
+                        BlockPos pos = new BlockPos(position.getX(), y, position.getZ());
+                        state = world.getBlockState(pos);
                         if (state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos))
                         {
                             this.setBlockAndNotifyAdequately(world, pos, TRUNK);
-                    		if(i < p && i % 2 == 0)
-                    		{
-                    			this.growLeavesLayerStrict(world, pos, i < p / 2 ? 1 : 2);
-                    		}
-                        	if(branch % 2 == 0 && y1 > j)
-                        	{
-                        		EnumFacing facing = EnumFacing.Plane.HORIZONTAL.random(rand);
-                        		int branchX = position.getX() + facing.getXOffset();
-                        		int branchZ = position.getZ() + facing.getZOffset();
-                        		pos =  new BlockPos(branchX, y, branchZ);
+                            if (i < p && i % 2 == 0)
+                            {
+                                this.growLeavesLayerStrict(world, pos, i < p / 2 ? 1 : 2);
+                            }
+                            if (branch % 2 == 0 && y1 > j)
+                            {
+                                EnumFacing facing = EnumFacing.Plane.HORIZONTAL.random(rand);
+                                int branchX = position.getX() + facing.getFrontOffsetX();
+                                int branchZ = position.getZ() + facing.getFrontOffsetZ();
+                                pos = new BlockPos(branchX, y, branchZ);
                                 if (state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos))
                                 {
-                                	this.setBlockAndNotifyAdequately(world, pos, TRUNK.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis())));
-                                	for(EnumFacing f : EnumFacing.VALUES)
-                                	{
-                                		BlockPos pos1 = pos.offset(f);
-                                		IBlockState state1 = world.getBlockState(pos1);
-                                		if(state1.getBlock().canBeReplacedByLeaves(state1, world, pos1))
-                                		{
-                                			this.setBlockAndNotifyAdequately(world, pos1, LEAF);
-                                		}
-                                	}
+                                    this.setBlockAndNotifyAdequately(world, pos, TRUNK.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis())));
+                                    for (EnumFacing f : EnumFacing.VALUES)
+                                    {
+                                        BlockPos pos1 = pos.offset(f);
+                                        IBlockState state1 = world.getBlockState(pos1);
+                                        if (state1.getBlock().canBeReplacedByLeaves(state1, world, pos1))
+                                        {
+                                            this.setBlockAndNotifyAdequately(world, pos1, LEAF);
+                                        }
+                                    }
                                 }
-                        	}
+                            }
                         }
-                    	branch++;
-                    	if(i == 0)
-                    	{
-            				pos = pos.up();
-            				state = world.getBlockState(pos);
+                        branch++;
+                        if (i == 0)
+                        {
+                            pos = pos.up();
+                            state = world.getBlockState(pos);
                             if (state.getBlock().canBeReplacedByLeaves(state, world, pos))
                             {
-                            	this.setBlockAndNotifyAdequately(world, pos, LEAF);
+                                this.setBlockAndNotifyAdequately(world, pos, LEAF);
                             }
-                    	}
+                        }
                     }
-                    
+
                     return true;
                 }
                 else
@@ -145,7 +145,7 @@ public class WorldGenPineTree extends WorldGenAbstractTree
             return false;
         }
     }
-    
+
     //stolen from WorldGenHugeTrees hehe
     protected void growLeavesLayerStrict(World worldIn, BlockPos layerCenter, int width)
     {

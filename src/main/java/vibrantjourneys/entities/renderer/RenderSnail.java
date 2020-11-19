@@ -1,7 +1,5 @@
 package vibrantjourneys.entities.renderer;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -10,6 +8,8 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import vibrantjourneys.entities.passive.EntitySnail;
 import vibrantjourneys.entities.renderer.models.ModelSnail;
 import vibrantjourneys.util.Reference;
+
+import javax.annotation.Nonnull;
 
 public class RenderSnail extends RenderLiving<EntitySnail>
 {

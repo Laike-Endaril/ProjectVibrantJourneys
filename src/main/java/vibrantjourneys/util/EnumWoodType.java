@@ -1,8 +1,8 @@
 package vibrantjourneys.util;
 
-import java.util.ArrayList;
-
 import net.minecraft.world.biome.Biome;
+
+import java.util.ArrayList;
 
 public enum EnumWoodType
 {
@@ -34,44 +34,44 @@ public enum EnumWoodType
         this.treeDensity = treeDensity;
         this.homeBiomes = homeBiomes;
     }
-    
+
+    public static EnumWoodType byId(int id)
+    {
+        for (EnumWoodType woodType : EnumWoodType.values())
+        {
+            if (woodType.id == id)
+            {
+                return woodType;
+            }
+        }
+        return EnumWoodType.WILLOW;
+    }
+
     public String getName()
     {
         return this.name;
     }
-    
+
     public int getID()
     {
-    	return id;
+        return id;
     }
-    
+
     /**
      * @return -1 for trees that have no associated fallen tree
      */
     public int getFallenTreeDensity()
     {
-    	return this.fallenTreeDensity;
+        return this.fallenTreeDensity;
     }
-    
+
     public int getTreeDensity()
     {
-    	return this.treeDensity;
+        return this.treeDensity;
     }
-    
+
     public Biome[] getTreeBiomes()
     {
-    	return BiomeReference.getBiomes(this.homeBiomes);
-    }
-    
-    public static EnumWoodType byId(int id)
-    {
-    	for(EnumWoodType woodType : EnumWoodType.values())
-    	{
-    		if(woodType.id == id)
-    		{
-    			return woodType;
-    		}
-    	}
-		return EnumWoodType.WILLOW;
+        return BiomeReference.getBiomes(this.homeBiomes);
     }
 }

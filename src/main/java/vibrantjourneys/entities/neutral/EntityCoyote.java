@@ -1,29 +1,12 @@
 package vibrantjourneys.entities.neutral;
 
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import com.google.common.base.Predicate;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIFollowOwner;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
-import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
-import net.minecraft.entity.ai.EntityAISit;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITargetNonTamed;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.passive.AbstractHorse;
@@ -41,11 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -54,12 +33,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import vibrantjourneys.entities.ai.EntityAICoyoteBeg;
 
+import javax.annotation.Nullable;
+import java.util.UUID;
+
 public class EntityCoyote extends EntityTameable
 {
     private static final DataParameter<Float> DATA_HEALTH_ID = EntityDataManager.<Float>createKey(EntityCoyote.class, DataSerializers.FLOAT);
     private static final DataParameter<Boolean> BEGGING = EntityDataManager.<Boolean>createKey(EntityCoyote.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> COLLAR_COLOR = EntityDataManager.<Integer>createKey(EntityCoyote.class, DataSerializers.VARINT);
-    
+
     private float headRotationCourse;
     private float headRotationCourseOld;
     private boolean isWet;
@@ -159,7 +141,7 @@ public class EntityCoyote extends EntityTameable
     {
         super.writeEntityToNBT(compound);
         compound.setBoolean("Angry", this.isAngry());
-        compound.setByte("CollarColor", (byte)this.getCollarColor().getDyeDamage());
+        compound.setByte("CollarColor", (byte) this.getCollarColor().getDyeDamage());
     }
 
     @Override
@@ -183,7 +165,7 @@ public class EntityCoyote extends EntityTameable
         }
         else if (this.rand.nextInt(3) == 0)
         {
-            return this.isTamed() && ((Float)this.dataManager.get(DATA_HEALTH_ID)).floatValue() < 10.0F ? SoundEvents.ENTITY_WOLF_WHINE : SoundEvents.ENTITY_WOLF_PANT;
+            return this.isTamed() && ((Float) this.dataManager.get(DATA_HEALTH_ID)).floatValue() < 10.0F ? SoundEvents.ENTITY_WOLF_WHINE : SoundEvents.ENTITY_WOLF_PANT;
         }
         else
         {
@@ -226,7 +208,7 @@ public class EntityCoyote extends EntityTameable
             this.isShaking = true;
             this.timeWolfIsShaking = 0.0F;
             this.prevTimeWolfIsShaking = 0.0F;
-            this.world.setEntityState(this, (byte)8);
+            this.world.setEntityState(this, (byte) 8);
         }
 
         if (!this.world.isRemote && this.getAttackTarget() == null && this.isAngry())
@@ -277,14 +259,14 @@ public class EntityCoyote extends EntityTameable
 
             if (this.timeWolfIsShaking > 0.4F)
             {
-                float f = (float)this.getEntityBoundingBox().minY;
-                int i = (int)(MathHelper.sin((this.timeWolfIsShaking - 0.4F) * (float)Math.PI) * 7.0F);
+                float f = (float) this.getEntityBoundingBox().minY;
+                int i = (int) (MathHelper.sin((this.timeWolfIsShaking - 0.4F) * (float) Math.PI) * 7.0F);
 
                 for (int j = 0; j < i; ++j)
                 {
                     float f1 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
                     float f2 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
-                    this.world.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX + (double)f1, (double)(f + 0.8F), this.posZ + (double)f2, this.motionX, this.motionY, this.motionZ);
+                    this.world.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX + (double) f1, (double) (f + 0.8F), this.posZ + (double) f2, this.motionX, this.motionY, this.motionZ);
                 }
             }
         }
@@ -316,13 +298,13 @@ public class EntityCoyote extends EntityTameable
             f = 1.0F;
         }
 
-        return MathHelper.sin(f * (float)Math.PI) * MathHelper.sin(f * (float)Math.PI * 11.0F) * 0.15F * (float)Math.PI;
+        return MathHelper.sin(f * (float) Math.PI) * MathHelper.sin(f * (float) Math.PI * 11.0F) * 0.15F * (float) Math.PI;
     }
 
     @SideOnly(Side.CLIENT)
     public float getInterestedAngle(float p_70917_1_)
     {
-        return (this.headRotationCourseOld + (this.headRotationCourse - this.headRotationCourseOld) * p_70917_1_) * 0.15F * (float)Math.PI;
+        return (this.headRotationCourseOld + (this.headRotationCourse - this.headRotationCourseOld) * p_70917_1_) * 0.15F * (float) Math.PI;
     }
 
     @Override
@@ -365,7 +347,7 @@ public class EntityCoyote extends EntityTameable
     @Override
     public boolean attackEntityAsMob(Entity entityIn)
     {
-        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)((int)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue()));
+        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue()));
 
         if (flag)
         {
@@ -403,16 +385,16 @@ public class EntityCoyote extends EntityTameable
             {
                 if (itemstack.getItem() instanceof ItemFood)
                 {
-                    ItemFood itemfood = (ItemFood)itemstack.getItem();
+                    ItemFood itemfood = (ItemFood) itemstack.getItem();
 
-                    if (itemfood.isWolfsFavoriteMeat() && ((Float)this.dataManager.get(DATA_HEALTH_ID)).floatValue() < 20.0F)
+                    if (itemfood.isWolfsFavoriteMeat() && ((Float) this.dataManager.get(DATA_HEALTH_ID)).floatValue() < 20.0F)
                     {
                         if (!player.capabilities.isCreativeMode)
                         {
                             itemstack.shrink(1);
                         }
 
-                        this.heal((float)itemfood.getHealAmount(itemstack));
+                        this.heal((float) itemfood.getHealAmount(itemstack));
                         return true;
                     }
                 }
@@ -439,7 +421,7 @@ public class EntityCoyote extends EntityTameable
                 this.aiSit.setSitting(!this.isSitting());
                 this.isJumping = false;
                 this.navigator.clearPath();
-                this.setAttackTarget((EntityLivingBase)null);
+                this.setAttackTarget((EntityLivingBase) null);
             }
         }
         else if (itemstack.getItem() == Items.RABBIT && !this.isAngry())
@@ -455,16 +437,16 @@ public class EntityCoyote extends EntityTameable
                 {
                     this.setTamedBy(player);
                     this.navigator.clearPath();
-                    this.setAttackTarget((EntityLivingBase)null);
+                    this.setAttackTarget((EntityLivingBase) null);
                     this.aiSit.setSitting(true);
                     this.setHealth(20.0F);
                     this.playTameEffect(true);
-                    this.world.setEntityState(this, (byte)7);
+                    this.world.setEntityState(this, (byte) 7);
                 }
                 else
                 {
                     this.playTameEffect(false);
-                    this.world.setEntityState(this, (byte)6);
+                    this.world.setEntityState(this, (byte) 6);
                 }
             }
 
@@ -499,14 +481,14 @@ public class EntityCoyote extends EntityTameable
         }
         else
         {
-            return this.isTamed() ? (0.55F - (this.getMaxHealth() - ((Float)this.dataManager.get(DATA_HEALTH_ID)).floatValue()) * 0.02F) * (float)Math.PI : ((float)Math.PI / 5F);
+            return this.isTamed() ? (0.55F - (this.getMaxHealth() - ((Float) this.dataManager.get(DATA_HEALTH_ID)).floatValue()) * 0.02F) * (float) Math.PI : ((float) Math.PI / 5F);
         }
     }
 
     @Override
     public boolean isBreedingItem(ItemStack stack)
     {
-        return stack.getItem() instanceof ItemFood && ((ItemFood)stack.getItem()).isWolfsFavoriteMeat();
+        return stack.getItem() instanceof ItemFood && ((ItemFood) stack.getItem()).isWolfsFavoriteMeat();
     }
 
     @Override
@@ -517,26 +499,26 @@ public class EntityCoyote extends EntityTameable
 
     public boolean isAngry()
     {
-        return (((Byte)this.dataManager.get(TAMED)).byteValue() & 2) != 0;
+        return (((Byte) this.dataManager.get(TAMED)).byteValue() & 2) != 0;
     }
 
     public void setAngry(boolean angry)
     {
-        byte b0 = ((Byte)this.dataManager.get(TAMED)).byteValue();
+        byte b0 = ((Byte) this.dataManager.get(TAMED)).byteValue();
 
         if (angry)
         {
-            this.dataManager.set(TAMED, Byte.valueOf((byte)(b0 | 2)));
+            this.dataManager.set(TAMED, Byte.valueOf((byte) (b0 | 2)));
         }
         else
         {
-            this.dataManager.set(TAMED, Byte.valueOf((byte)(b0 & -3)));
+            this.dataManager.set(TAMED, Byte.valueOf((byte) (b0 & -3)));
         }
     }
 
     public EnumDyeColor getCollarColor()
     {
-        return EnumDyeColor.byDyeDamage(((Integer)this.dataManager.get(COLLAR_COLOR)).intValue() & 15);
+        return EnumDyeColor.byDyeDamage(((Integer) this.dataManager.get(COLLAR_COLOR)).intValue() & 15);
     }
 
     public void setCollarColor(EnumDyeColor collarcolor)
@@ -559,11 +541,6 @@ public class EntityCoyote extends EntityTameable
         return entitywolf;
     }
 
-    public void setBegging(boolean beg)
-    {
-        this.dataManager.set(BEGGING, Boolean.valueOf(beg));
-    }
-
     @Override
     public boolean canMateWith(EntityAnimal otherAnimal)
     {
@@ -581,7 +558,7 @@ public class EntityCoyote extends EntityTameable
         }
         else
         {
-            EntityCoyote entitywolf = (EntityCoyote)otherAnimal;
+            EntityCoyote entitywolf = (EntityCoyote) otherAnimal;
 
             if (!entitywolf.isTamed())
             {
@@ -600,7 +577,12 @@ public class EntityCoyote extends EntityTameable
 
     public boolean isBegging()
     {
-        return ((Boolean)this.dataManager.get(BEGGING)).booleanValue();
+        return ((Boolean) this.dataManager.get(BEGGING)).booleanValue();
+    }
+
+    public void setBegging(boolean beg)
+    {
+        this.dataManager.set(BEGGING, Boolean.valueOf(beg));
     }
 
     @Override
@@ -610,7 +592,7 @@ public class EntityCoyote extends EntityTameable
         {
             if (target instanceof EntityCoyote)
             {
-                EntityCoyote entitywolf = (EntityCoyote)target;
+                EntityCoyote entitywolf = (EntityCoyote) target;
 
                 if (entitywolf.isTamed() && entitywolf.getOwner() == owner)
                 {
@@ -618,13 +600,13 @@ public class EntityCoyote extends EntityTameable
                 }
             }
 
-            if (target instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer)owner).canAttackPlayer((EntityPlayer)target))
+            if (target instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) target))
             {
                 return false;
             }
             else
             {
-                return !(target instanceof AbstractHorse) || !((AbstractHorse)target).isTame();
+                return !(target instanceof AbstractHorse) || !((AbstractHorse) target).isTame();
             }
         }
         else

@@ -12,15 +12,15 @@ import vibrantjourneys.util.EnumLeafType;
 
 public class BlockCoconut extends Block
 {
-	public BlockCoconut()
-	{
-		super(Material.PLANTS);
-		this.setHardness(0.4F);
-		this.setResistance(7.0F);
-		this.setSoundType(SoundType.WOOD);
-	}
-	
-	@Override
+    public BlockCoconut()
+    {
+        super(Material.PLANTS);
+        this.setHardness(0.4F);
+        this.setResistance(7.0F);
+        this.setSoundType(SoundType.WOOD);
+    }
+
+    @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
         return this.canBlockStay(worldIn, pos);
@@ -32,19 +32,19 @@ public class BlockCoconut extends Block
         return iblockstate.getBlock() == PVJBlocks.LEAVES.get(EnumLeafType.PALM.getID());
     }
 
-	@Override
+    @Override
     public boolean isFullCube(IBlockState state)
     {
         return false;
     }
-	
-	@Override
+
+    @Override
     public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
-	
-	@Override
+
+    @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
         if (!this.canBlockStay(worldIn, pos))
@@ -52,7 +52,7 @@ public class BlockCoconut extends Block
             this.dropBlock(worldIn, pos, state);
         }
     }
-	
+
     private void dropBlock(World worldIn, BlockPos pos, IBlockState state)
     {
         worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);

@@ -11,9 +11,9 @@ import vibrantjourneys.entities.neutral.EntityCoyote;
 public class EntityAICoyoteBeg extends EntityAIBase
 {
     private final EntityCoyote wolf;
-    private EntityPlayer player;
     private final World world;
     private final float minPlayerDistance;
+    private EntityPlayer player;
     private int timeoutCounter;
 
     public EntityAICoyoteBeg(EntityCoyote wolf, float minDistance)
@@ -27,7 +27,7 @@ public class EntityAICoyoteBeg extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        this.player = this.world.getClosestPlayerToEntity(this.wolf, (double)this.minPlayerDistance);
+        this.player = this.world.getClosestPlayerToEntity(this.wolf, (double) this.minPlayerDistance);
         return this.player == null ? false : this.hasTemptationItemInHand(this.player);
     }
 
@@ -38,7 +38,7 @@ public class EntityAICoyoteBeg extends EntityAIBase
         {
             return false;
         }
-        else if (this.wolf.getDistanceSq(this.player) > (double)(this.minPlayerDistance * this.minPlayerDistance))
+        else if (this.wolf.getDistanceSq(this.player) > (double) (this.minPlayerDistance * this.minPlayerDistance))
         {
             return false;
         }
@@ -65,7 +65,7 @@ public class EntityAICoyoteBeg extends EntityAIBase
     @Override
     public void updateTask()
     {
-        this.wolf.getLookHelper().setLookPosition(this.player.posX, this.player.posY + (double)this.player.getEyeHeight(), this.player.posZ, 10.0F, (float)this.wolf.getVerticalFaceSpeed());
+        this.wolf.getLookHelper().setLookPosition(this.player.posX, this.player.posY + (double) this.player.getEyeHeight(), this.player.posZ, 10.0F, (float) this.wolf.getVerticalFaceSpeed());
         --this.timeoutCounter;
     }
 

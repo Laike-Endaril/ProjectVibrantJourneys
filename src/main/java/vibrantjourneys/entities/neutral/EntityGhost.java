@@ -2,12 +2,7 @@ package vibrantjourneys.entities.neutral;
 
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -23,20 +18,20 @@ import vibrantjourneys.util.PVJLootTableList;
 public class EntityGhost extends EntityMob
 {
     private boolean isFading;
-	
-	public EntityGhost(World world)
-	{
-		super(world);
-		isFading = false;
-	}
-	
-	@Override
+
+    public EntityGhost(World world)
+    {
+        super(world);
+        isFading = false;
+    }
+
+    @Override
     protected void entityInit()
     {
         super.entityInit();
     }
-	
-	@Override
+
+    @Override
     protected void initEntityAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
@@ -47,8 +42,8 @@ public class EntityGhost extends EntityMob
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
     }
-    
-	@Override
+
+    @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
@@ -56,90 +51,92 @@ public class EntityGhost extends EntityMob
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.22D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
     }
-	
-	public boolean getIsFading()
-	{
-		return isFading;
-	}
-	
-	//poof!
-	public void poof()
-	{
-		this.spawnExplosionParticle();
-		this.world.removeEntity(this);
-	}
 
-	@Override
+    public boolean getIsFading()
+    {
+        return isFading;
+    }
+
+    //poof!
+    public void poof()
+    {
+        this.spawnExplosionParticle();
+        this.world.removeEntity(this);
+    }
+
+    @Override
     public void onUpdate()
     {
         super.onUpdate();
-        
+
         if (!this.world.isRemote)
         {
             BlockPos blockpos = new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ);
             int i = this.world.getLightFromNeighbors(blockpos);
-            
-            if(!this.getIsFading())
+
+            if (!this.getIsFading())
             {
-                if(i > 7)
+                if (i > 7)
                 {
-                	if(this.getRNG().nextInt(300) == 0)
-                		isFading = true;
+                    if (this.getRNG().nextInt(300) == 0)
+                        isFading = true;
                 }
             }
-            if(getIsFading())
+            if (getIsFading())
             {
-            	//stop fading process when ghost returns to the dark
-            	if(i <= 7)
-            		isFading = false;
-            	else
-            	{
-                	this.tasks.removeTask(new EntityAIHurtByTarget(this, false, new Class[0]));
-                	if(this.getRNG().nextInt(300) == 0)
-                		poof();
-            	}
+                //stop fading process when ghost returns to the dark
+                if (i <= 7)
+                    isFading = false;
+                else
+                {
+                    this.tasks.removeTask(new EntityAIHurtByTarget(this, false, new Class[0]));
+                    if (this.getRNG().nextInt(300) == 0)
+                        poof();
+                }
             }
         }
     }
-	
-	@Override
+
+    @Override
     public EnumCreatureAttribute getCreatureAttribute()
     {
         return EnumCreatureAttribute.UNDEAD;
     }
-	
-	@Override
-	protected ResourceLocation getLootTable()
-	{
-		return PVJLootTableList.GHOST;
-	}
-	
-	@Override
+
+    @Override
+    protected ResourceLocation getLootTable()
+    {
+        return PVJLootTableList.GHOST;
+    }
+
+    @Override
     protected SoundEvent getAmbientSound()
     {
         return PVJSounds.GHOST_AMBIENT;
     }
 
-	@Override
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
         return PVJSounds.GHOST_HURT;
     }
 
-	@Override
+    @Override
     protected SoundEvent getDeathSound()
     {
         return PVJSounds.GHOST_DEATH;
     }
-	
+
     @Override
-    public void fall(float distance, float damageMultiplier){}
-    
-	@Override
+    public void fall(float distance, float damageMultiplier)
+    {
+    }
+
+    @Override
     public boolean getCanSpawnHere()
     {
-		if(this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
-			return false;
+        if (this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
+            return false;
         return super.getCanSpawnHere();
     }
 }

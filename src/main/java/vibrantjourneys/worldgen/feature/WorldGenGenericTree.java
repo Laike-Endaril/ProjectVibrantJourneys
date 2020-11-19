@@ -1,7 +1,5 @@
 package vibrantjourneys.worldgen.feature;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -11,6 +9,8 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.util.EnumLeafType;
 import vibrantjourneys.util.EnumWoodType;
+
+import java.util.Random;
 
 public class WorldGenGenericTree extends WorldGenAbstractTree
 {
@@ -76,7 +76,7 @@ public class WorldGenGenericTree extends WorldGenAbstractTree
             {
                 BlockPos down = position.down();
                 IBlockState state = worldIn.getBlockState(down);
-                boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, down, net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling)Blocks.SAPLING);
+                boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, down, net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling) Blocks.SAPLING);
 
                 if (isSoil && position.getY() < worldIn.getHeight() - i - 1)
                 {

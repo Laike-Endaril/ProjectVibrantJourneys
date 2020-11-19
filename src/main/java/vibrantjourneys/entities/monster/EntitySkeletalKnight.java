@@ -22,53 +22,53 @@ public class EntitySkeletalKnight extends AbstractSkeleton
     {
         super(world);
     }
-    
+
     @Override
     protected void initEntityAI()
     {
-    	super.initEntityAI();
+        super.initEntityAI();
         this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.2D, false));
     }
-    
+
     @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.235D);
     }
-	
-	@Override
+
+    @Override
     protected SoundEvent getAmbientSound()
     {
         return SoundEvents.ENTITY_SKELETON_AMBIENT;
     }
 
-	@Override
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
         return SoundEvents.ENTITY_SKELETON_HURT;
     }
 
-	@Override
+    @Override
     protected SoundEvent getDeathSound()
     {
         return SoundEvents.ENTITY_SKELETON_DEATH;
     }
 
-	@Override
+    @Override
     protected SoundEvent getStepSound()
     {
         return SoundEvents.ENTITY_SKELETON_STEP;
     }
-	
-	@Override
+
+    @Override
     public void onDeath(DamageSource cause)
     {
         super.onDeath(cause);
 
         if (cause.getTrueSource() instanceof EntityCreeper)
         {
-            EntityCreeper entitycreeper = (EntityCreeper)cause.getTrueSource();
+            EntityCreeper entitycreeper = (EntityCreeper) cause.getTrueSource();
 
             if (entitycreeper.getPowered() && entitycreeper.ableToCauseSkullDrop())
             {
@@ -77,30 +77,30 @@ public class EntitySkeletalKnight extends AbstractSkeleton
             }
         }
     }
-	
-	@Override
+
+    @Override
     protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
     {
         this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
     }
-	
-	@Override
-	protected ResourceLocation getLootTable()
-	{
-		return PVJLootTableList.SKELETAL_KNIGHT;
-	}
-	
-	@Override
+
+    @Override
+    protected ResourceLocation getLootTable()
+    {
+        return PVJLootTableList.SKELETAL_KNIGHT;
+    }
+
+    @Override
     public boolean getCanSpawnHere()
     {
-		if(this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
-			return false;
+        if (this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
+            return false;
         return super.getCanSpawnHere();
     }
-	
-	@Override
+
+    @Override
     public void setCombatTask()
     {
-		
+
     }
 }

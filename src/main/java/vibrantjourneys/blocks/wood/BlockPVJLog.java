@@ -1,7 +1,6 @@
 package vibrantjourneys.blocks.wood;
 
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.properties.IProperty;
@@ -26,16 +25,16 @@ public class BlockPVJLog extends BlockLog implements IPropertyHelper
     @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
-    	return MapColor.WOOD;
+        return MapColor.WOOD;
     }
-    
-	@Override
+
+    @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
-    	return Blocks.LOG.getFlammability(world, pos, face);
+        return Blocks.LOG.getFlammability(world, pos, face);
     }
-	
-	@Override
+
+    @Override
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
         return Blocks.LOG.getFireSpreadSpeed(world, pos, face);
@@ -63,13 +62,13 @@ public class BlockPVJLog extends BlockLog implements IPropertyHelper
 
         return iblockstate;
     }
-    
+
     @Override
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
 
-        switch ((BlockLog.EnumAxis)state.getValue(LOG_AXIS))
+        switch ((BlockLog.EnumAxis) state.getValue(LOG_AXIS))
         {
             case Y:
                 i = 0;
@@ -81,8 +80,8 @@ public class BlockPVJLog extends BlockLog implements IPropertyHelper
                 i = 2;
                 break;
             default:
-			i = 0;
-				break;
+                i = 0;
+                break;
         }
 
         return i;
@@ -91,12 +90,12 @@ public class BlockPVJLog extends BlockLog implements IPropertyHelper
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {LOG_AXIS});
+        return new BlockStateContainer(this, new IProperty[]{LOG_AXIS});
     }
-    
-	@Override
-	public ImmutableList<IBlockState> getProperties()
-	{
-		return this.blockState.getValidStates();
-	}
+
+    @Override
+    public ImmutableList<IBlockState> getProperties()
+    {
+        return this.blockState.getValidStates();
+    }
 }

@@ -8,9 +8,9 @@ import vibrantjourneys.util.Reference;
 
 public class PVJTileEntities
 {
-	public static void initTileEntities()
-	{
-		if(PVJConfig.master.enableMysticalGrill)
-			GameRegistry.registerTileEntity(TileEntityMysticalGrill.class, new ResourceLocation(Reference.MOD_ID, "mystical_grill"));
-	}
+    public static void initTileEntities()
+    {
+        if (PVJConfig.master.enableMysticalGrill)
+            GameRegistry.registerTileEntity(TileEntityMysticalGrill.class, new ResourceLocation(Reference.MOD_ID, "mystical_grill"));
+    }
 }

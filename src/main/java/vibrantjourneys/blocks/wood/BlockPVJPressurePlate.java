@@ -1,7 +1,6 @@
 package vibrantjourneys.blocks.wood;
 
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.block.BlockPressurePlate;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,10 +15,10 @@ public class BlockPVJPressurePlate extends BlockPressurePlate implements IProper
         this.setHardness(0.5F);
         this.setSoundType(SoundType.WOOD);
     }
-    
-	@Override
-	public ImmutableList<IBlockState> getProperties()
-	{
-		return this.blockState.getValidStates();
-	}
+
+    @Override
+    public ImmutableList<IBlockState> getProperties()
+    {
+        return this.blockState.getValidStates();
+    }
 }

@@ -1,11 +1,6 @@
 package vibrantjourneys.blocks.plant;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
@@ -24,51 +19,54 @@ import net.minecraftforge.common.IShearable;
 import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.util.IPropertyHelper;
 
+import javax.annotation.Nullable;
+import java.util.Random;
+
 public class BlockWeed extends BlockPVJPlant implements IShearable, IPropertyHelper
 {
-	@Override
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
     }
-	
-	@Override
+
+    @Override
     protected boolean canSustainBush(IBlockState state)
     {
-		return super.canSustainBush(state);
+        return super.canSustainBush(state);
     }
-	
-	@Override
+
+    @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
-    	return MapColor.GRASS;
+        return MapColor.GRASS;
     }
-	
-	@Override
+
+    @Override
     public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
     {
         return super.canBlockStay(worldIn, pos, state);
     }
 
-	@Override
+    @Override
     public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos)
     {
         return true;
     }
 
-	@Override
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return null;
     }
 
-	@Override
+    @Override
     public int quantityDroppedWithBonus(int fortune, Random random)
     {
         return 1 + random.nextInt(fortune * 2 + 1);
     }
-	
-	@Override
+
+    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack)
     {
         if (!worldIn.isRemote && stack.getItem() == Items.SHEARS)
@@ -82,33 +80,33 @@ public class BlockWeed extends BlockPVJPlant implements IShearable, IPropertyHel
         }
     }
 
-	@Override
+    @Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
         return new ItemStack(this, 1, 0);
     }
-	
+
     @Override
     public boolean isShearable(ItemStack item, IBlockAccess world, BlockPos pos)
-    { 
-    	return true;
+    {
+        return true;
     }
-    
+
     @Override
     public NonNullList<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune)
     {
         return NonNullList.withSize(1, new ItemStack(this, 1, 0));
     }
-	
-	@Override
+
+    @Override
     public Block.EnumOffsetType getOffsetType()
     {
         return Block.EnumOffsetType.XZ;
     }
 
-	@Override
-	public ImmutableList<IBlockState> getProperties()
-	{
-		return this.blockState.getValidStates();
-	}
+    @Override
+    public ImmutableList<IBlockState> getProperties()
+    {
+        return this.blockState.getValidStates();
+    }
 }

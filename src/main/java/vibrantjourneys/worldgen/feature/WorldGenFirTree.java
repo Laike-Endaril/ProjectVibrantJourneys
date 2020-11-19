@@ -1,7 +1,5 @@
 package vibrantjourneys.worldgen.feature;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -12,11 +10,13 @@ import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.util.EnumLeafType;
 import vibrantjourneys.util.EnumWoodType;
 
+import java.util.Random;
+
 public class WorldGenFirTree extends WorldGenAbstractTree
 {
     private static final IBlockState TRUNK = PVJBlocks.LOGS.get(EnumWoodType.FIR.getID()).getDefaultState();
     private static final IBlockState LEAF = PVJBlocks.LEAVES.get(EnumLeafType.FIR.getID())
-    		.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
+            .getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
 
     public WorldGenFirTree(boolean notify)
     {
@@ -79,7 +79,7 @@ public class WorldGenFirTree extends WorldGenAbstractTree
                 BlockPos down = position.down();
                 IBlockState state = worldIn.getBlockState(down);
 
-                if (state.getBlock().canSustainPlant(state, worldIn, down, net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - i - 1)
+                if (state.getBlock().canSustainPlant(state, worldIn, down, net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling) Blocks.SAPLING) && position.getY() < worldIn.getHeight() - i - 1)
                 {
                     state.getBlock().onPlantGrow(state, worldIn, down, position);
                     int i3 = rand.nextInt(3) + 1;
@@ -90,9 +90,9 @@ public class WorldGenFirTree extends WorldGenAbstractTree
                     {
                         int j4 = position.getY() + i - l3;
                         int i4 = i3;
-                        if(j4 == position.getY() + i)
+                        if (j4 == position.getY() + i)
                         {
-                        	i4 = 1;
+                            i4 = 1;
                         }
 
                         for (int i2 = position.getX() - i4; i2 <= position.getX() + i4; ++i2)

@@ -15,7 +15,7 @@ import net.minecraft.world.IBlockAccess;
 
 public abstract class BlockPVJSlab extends BlockSlab
 {
-	private IBlockState state;
+    private IBlockState state;
 
     public BlockPVJSlab(IBlockState state)
     {
@@ -32,29 +32,29 @@ public abstract class BlockPVJSlab extends BlockSlab
             iblockstate = iblockstate.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
         }
     }
-    
+
     @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
         return this.state.getMapColor(worldIn, pos);
     }
-    
+
     @Override
     public boolean getUseNeighborBrightness(IBlockState state)
     {
-    	return true;
+        return true;
     }
-    
+
     @Override
-    public String getTranslationKey(int meta)
+    public String getUnlocalizedName(int meta)
     {
-    	return this.getTranslationKey();
+        return this.getUnlocalizedName();
     }
-    
+
     @Override
     public int damageDropped(IBlockState state)
     {
-    	return 0;
+        return 0;
     }
 
     @Override
@@ -68,23 +68,23 @@ public abstract class BlockPVJSlab extends BlockSlab
     {
         return EnumBlockHalf.BOTTOM;
     }
-    
-	@Override
+
+    @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
-		if(world.getBlockState(pos).getMaterial() == Material.WOOD)
-			return Blocks.WOODEN_SLAB.getFlammability(world, pos, face);
-		
-		return 0;
+        if (world.getBlockState(pos).getMaterial() == Material.WOOD)
+            return Blocks.WOODEN_SLAB.getFlammability(world, pos, face);
+
+        return 0;
     }
-	
-	@Override
+
+    @Override
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
-		if(world.getBlockState(pos).getMaterial() == Material.WOOD)
-			return Blocks.WOODEN_SLAB.getFireSpreadSpeed(world, pos, face);
-		
-		return 0;
+        if (world.getBlockState(pos).getMaterial() == Material.WOOD)
+            return Blocks.WOODEN_SLAB.getFireSpreadSpeed(world, pos, face);
+
+        return 0;
     }
 
     @Override
@@ -101,15 +101,15 @@ public abstract class BlockPVJSlab extends BlockSlab
     @Override
     public int getMetaFromState(IBlockState state)
     {
-    	if(this.isDouble())
-    		return 0;
-    	
-    	return ((EnumBlockHalf)state.getValue(HALF)).ordinal() + 1;
+        if (this.isDouble())
+            return 0;
+
+        return ((EnumBlockHalf) state.getValue(HALF)).ordinal() + 1;
     }
 
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return this.isDouble() ? new BlockStateContainer(this, new IProperty[] {}) : new BlockStateContainer(this, new IProperty[] {HALF});
+        return this.isDouble() ? new BlockStateContainer(this, new IProperty[]{}) : new BlockStateContainer(this, new IProperty[]{HALF});
     }
 }

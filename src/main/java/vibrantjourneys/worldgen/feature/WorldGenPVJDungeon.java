@@ -1,10 +1,5 @@
 package vibrantjourneys.worldgen.feature;
 
-import java.util.Random;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -16,9 +11,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.storage.loot.LootTableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.util.EnumStoneType;
 import vibrantjourneys.util.PVJConfig;
+
+import java.util.Random;
 
 public class WorldGenPVJDungeon extends WorldGenerator
 {
@@ -92,20 +91,20 @@ public class WorldGenPVJDungeon extends WorldGenerator
                             }
                             else
                             {
-                            	if(rand.nextBoolean())
-                            		world.setBlockState(blockpos1, Blocks.COBBLESTONE.getDefaultState(), 2);
-                            	else
-                            	{
-                            		if(PVJConfig.master.enableStoneTypeBlocks)
-                            			world.setBlockState(blockpos1, PVJBlocks.STONES.get(EnumStoneType.COBBLESTONE_BRICK.getID()).getDefaultState(), 2);
-                            		else
-                            			world.setBlockState(blockpos1, Blocks.COBBLESTONE.getDefaultState(), 2);
-                            	}
+                                if (rand.nextBoolean())
+                                    world.setBlockState(blockpos1, Blocks.COBBLESTONE.getDefaultState(), 2);
+                                else
+                                {
+                                    if (PVJConfig.master.enableStoneTypeBlocks)
+                                        world.setBlockState(blockpos1, PVJBlocks.STONES.get(EnumStoneType.COBBLESTONE_BRICK.getID()).getDefaultState(), 2);
+                                    else
+                                        world.setBlockState(blockpos1, Blocks.COBBLESTONE.getDefaultState(), 2);
+                                }
 
                             }
-                            if(world.isAirBlock(blockpos1.up()) && rand.nextInt(6) == 0)
+                            if (world.isAirBlock(blockpos1.up()) && rand.nextInt(6) == 0)
                             {
-                            	world.setBlockState(blockpos1.up(), PVJBlocks.bones.getDefaultState(), 2);
+                                world.setBlockState(blockpos1.up(), PVJBlocks.bones.getDefaultState(), 2);
                             }
                         }
                     }
@@ -140,7 +139,7 @@ public class WorldGenPVJDungeon extends WorldGenerator
 
                             if (tileentity1 instanceof TileEntityChest)
                             {
-                                ((TileEntityChest)tileentity1).setLootTable(LootTableList.CHESTS_SIMPLE_DUNGEON, rand.nextLong());
+                                ((TileEntityChest) tileentity1).setLootTable(LootTableList.CHESTS_SIMPLE_DUNGEON, rand.nextLong());
                             }
 
                             break;
@@ -154,7 +153,7 @@ public class WorldGenPVJDungeon extends WorldGenerator
 
             if (tileentity instanceof TileEntityMobSpawner)
             {
-                ((TileEntityMobSpawner)tileentity).getSpawnerBaseLogic().setEntityId(this.pickMobSpawner(rand));
+                ((TileEntityMobSpawner) tileentity).getSpawnerBaseLogic().setEntityId(this.pickMobSpawner(rand));
             }
             else
             {

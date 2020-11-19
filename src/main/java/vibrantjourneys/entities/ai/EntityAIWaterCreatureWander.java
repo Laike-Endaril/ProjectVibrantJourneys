@@ -1,18 +1,18 @@
 package vibrantjourneys.entities.ai;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.Vec3d;
 import vibrantjourneys.entities.passive.EntityPVJWaterCreature;
 
+import javax.annotation.Nullable;
+
 public class EntityAIWaterCreatureWander extends EntityAIBase
 {
     protected final EntityPVJWaterCreature entity;
+    protected final double speed;
     protected double x;
     protected double y;
     protected double z;
-    protected final double speed;
     protected int executionChance;
     protected boolean mustUpdate;
 

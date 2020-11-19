@@ -8,15 +8,15 @@ import vibrantjourneys.util.IPropertyHelper;
 
 public class BlockFlouropore extends BlockBracketFungus implements IPropertyHelper
 {
-	public BlockFlouropore()
-	{
-		this.setLightLevel(0.3F);
-	}
-	
-	@Override
+    public BlockFlouropore()
+    {
+        this.setLightLevel(0.3F);
+    }
+
+    @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state)
     {
-        pos = pos.offset((EnumFacing)state.getValue(FACING).getOpposite());
+        pos = pos.offset((EnumFacing) state.getValue(FACING).getOpposite());
         return world.isSideSolid(pos, state.getValue(FACING));
     }
 }

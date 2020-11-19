@@ -8,23 +8,23 @@ import net.minecraftforge.common.EnumPlantType;
 
 public class BlockNetherPlant extends BlockPVJPlant
 {
-	@Override
+    @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
         IBlockState soil = worldIn.getBlockState(pos.down());
-        
-        if(soil.getBlock() == Blocks.NETHERRACK)
-        	return true;
-        
+
+        if (soil.getBlock() == Blocks.NETHERRACK)
+            return true;
+
         return super.canPlaceBlockAt(worldIn, pos) && soil.getBlock().canSustainPlant(soil, worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
     }
-	
+
     @Override
     public EnumPlantType getPlantType(net.minecraft.world.IBlockAccess world, BlockPos pos)
     {
-    	return EnumPlantType.Nether;
+        return EnumPlantType.Nether;
     }
-    
+
     @Override
     protected boolean canSustainBush(IBlockState state)
     {

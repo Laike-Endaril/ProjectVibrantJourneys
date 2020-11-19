@@ -12,27 +12,27 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockPVJPlanks extends Block
 {
-	public BlockPVJPlanks()
-	{
-		super(Material.WOOD);
-		this.setHardness(2.0F);
-		this.setResistance(5.0F);
-		this.setSoundType(SoundType.WOOD);
-	}
-	
-	@Override
+    public BlockPVJPlanks()
+    {
+        super(Material.WOOD);
+        this.setHardness(2.0F);
+        this.setResistance(5.0F);
+        this.setSoundType(SoundType.WOOD);
+    }
+
+    @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
-    	return Blocks.PLANKS.getFlammability(world, pos, face);
+        return Blocks.PLANKS.getFlammability(world, pos, face);
     }
-	
-	@Override
+
+    @Override
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
         return Blocks.PLANKS.getFireSpreadSpeed(world, pos, face);
     }
-	
-	@Override
+
+    @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
         return MapColor.WOOD;

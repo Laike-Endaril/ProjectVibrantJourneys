@@ -10,63 +10,69 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityCritter extends EntityAmbientCreature
 {
-	public EntityCritter(World world)
-	{
-		super(world);
-	}
-	
-	@Override
+    public EntityCritter(World world)
+    {
+        super(world);
+    }
+
+    @Override
     protected boolean canDespawn()
     {
         return true;
     }
-	
-	@Override
-    public boolean getCanSpawnHere()
-    {
-		if(this.posY < 55)
-			return false;
-		
-		return super.getCanSpawnHere();
-    }
-	
-    @Override
-    protected void collideWithEntity(Entity entityIn){}
 
     @Override
-    protected void collideWithNearbyEntities(){}
-    
+    public boolean getCanSpawnHere()
+    {
+        if (this.posY < 55)
+            return false;
+
+        return super.getCanSpawnHere();
+    }
+
     @Override
-    public void fall(float distance, float damageMultiplier){}
-    
-	@Override
+    protected void collideWithEntity(Entity entityIn)
+    {
+    }
+
+    @Override
+    protected void collideWithNearbyEntities()
+    {
+    }
+
+    @Override
+    public void fall(float distance, float damageMultiplier)
+    {
+    }
+
+    @Override
     protected boolean canTriggerWalking()
     {
         return false;
     }
-	
-	@Override
+
+    @Override
     protected int getExperiencePoints(EntityPlayer player)
     {
         return 0;
     }
-	
+
     @SideOnly(Side.CLIENT)
     @Override
     public boolean isInRangeToRenderDist(double distance)
     {
-    	return true;
+        return true;
     }
-	
-	@Override
+
+    @Override
     public float getEyeHeight()
     {
         return this.height;
     }
-	
-	@Override
+
+    @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand)
     {
-		return false;
+        return false;
     }
 }

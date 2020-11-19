@@ -30,7 +30,7 @@ public class RenderClam extends RenderLiving<EntityClam>
     {
         return new ResourceLocation(Reference.MOD_ID, "textures/entity/clam.png");
     }
-    
+
     public static class Factory implements IRenderFactory<EntityClam>
     {
         @Override

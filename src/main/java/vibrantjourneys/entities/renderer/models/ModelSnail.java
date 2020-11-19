@@ -33,7 +33,8 @@ public class ModelSnail extends ModelBase
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+    {
         GlStateManager.pushMatrix();
         GlStateManager.translate(this.antennaeLeft.offsetX, this.antennaeLeft.offsetY, this.antennaeLeft.offsetZ);
         GlStateManager.translate(this.antennaeLeft.rotationPointX * f5, this.antennaeLeft.rotationPointY * f5, this.antennaeLeft.rotationPointZ * f5);

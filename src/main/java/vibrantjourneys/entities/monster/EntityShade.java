@@ -2,15 +2,7 @@ package vibrantjourneys.entities.monster;
 
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIFleeSun;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIRestrictSun;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityMob;
@@ -27,13 +19,13 @@ import vibrantjourneys.util.BiomeReference;
 import vibrantjourneys.util.PVJLootTableList;
 
 public class EntityShade extends EntityMob
-{	
-	public EntityShade(World world)
-	{
-		super(world);
-	}
-	
-	@Override
+{
+    public EntityShade(World world)
+    {
+        super(world);
+    }
+
+    @Override
     protected void initEntityAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
@@ -48,8 +40,8 @@ public class EntityShade extends EntityMob
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityIronGolem>(this, EntityIronGolem.class, true));
     }
-    
-	@Override
+
+    @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
@@ -57,66 +49,68 @@ public class EntityShade extends EntityMob
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.22D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
     }
-	
-	@Override
+
+    @Override
     public EnumCreatureAttribute getCreatureAttribute()
     {
         return EnumCreatureAttribute.UNDEAD;
     }
-	
-	@Override
+
+    @Override
     public void onLivingUpdate()
     {
         if (this.world.isDaytime() && !this.world.isRemote)
         {
             float f = this.getBrightness();
-            BlockPos blockpos = this.getRidingEntity() instanceof EntityBoat ? (new BlockPos(this.posX, (double)Math.round(this.posY), this.posZ)).up() : new BlockPos(this.posX, (double)Math.round(this.posY), this.posZ);
+            BlockPos blockpos = this.getRidingEntity() instanceof EntityBoat ? (new BlockPos(this.posX, (double) Math.round(this.posY), this.posZ)).up() : new BlockPos(this.posX, (double) Math.round(this.posY), this.posZ);
 
             if (f > 0.5F && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.world.canSeeSky(blockpos))
             {
-            	this.setFire(8);
+                this.setFire(8);
             }
         }
 
         super.onLivingUpdate();
     }
-	
-	@Override
-	protected ResourceLocation getLootTable()
-	{
-		return PVJLootTableList.GHOST;
-	}
-	
-	@Override
+
+    @Override
+    protected ResourceLocation getLootTable()
+    {
+        return PVJLootTableList.GHOST;
+    }
+
+    @Override
     protected SoundEvent getAmbientSound()
     {
         return PVJSounds.GHOST_AMBIENT;
     }
 
-	@Override
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
         return PVJSounds.GHOST_HURT;
     }
 
-	@Override
+    @Override
     protected SoundEvent getDeathSound()
     {
         return PVJSounds.GHOST_DEATH;
     }
-	
+
     @Override
-    public void fall(float distance, float damageMultiplier){}
-    
-	@Override
+    public void fall(float distance, float damageMultiplier)
+    {
+    }
+
+    @Override
     public boolean getCanSpawnHere()
     {
-		if(this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
-			return false;
-		
-		if(BiomeReference.SNOWY_BIOMES.contains(world.getBiomeForCoordsBody(this.getPosition())))
-			return false;
-		
+        if (this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
+            return false;
+
+        if (BiomeReference.SNOWY_BIOMES.contains(world.getBiomeForCoordsBody(this.getPosition())))
+            return false;
+
         return super.getCanSpawnHere();
     }
 }

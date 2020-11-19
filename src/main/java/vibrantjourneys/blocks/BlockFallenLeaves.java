@@ -1,9 +1,5 @@
 package vibrantjourneys.blocks;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -26,80 +22,83 @@ import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+import java.util.Random;
+
 public class BlockFallenLeaves extends Block implements IShearable
 {
-	public BlockFallenLeaves()
-	{
-			super(Material.PLANTS);
-	        this.setHardness(0.1F);
-	        this.setLightOpacity(1);
-	        this.setSoundType(SoundType.PLANT);
-	        Blocks.FIRE.setFireInfo(this, 30, 60);
-	}
+    public BlockFallenLeaves()
+    {
+        super(Material.PLANTS);
+        this.setHardness(0.1F);
+        this.setLightOpacity(1);
+        this.setSoundType(SoundType.PLANT);
+        Blocks.FIRE.setFireInfo(this, 30, 60);
+    }
 
-	@Override
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
     }
-	
-	@Override
+
+    @Override
     @Nullable
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
-		return null;
+        return null;
     }
 
-	@Override
+    @Override
     public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
     {
         return true;
     }
-	
-	@Override
+
+    @Override
     public boolean causesSuffocation(IBlockState state)
     {
         return false;
     }
-	
-	@Override
-	public boolean isOpaqueCube(IBlockState state)
-	{
-		return false;
-	}
-	
-	@Override
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getRenderLayer()
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state)
     {
-        return Blocks.LEAVES.getRenderLayer();
+        return false;
     }
-	
-	@Override
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return Blocks.LEAVES.getBlockLayer();
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
         return Blocks.LEAVES.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
-	
-	@Override
+
+    @Override
     public boolean isFullCube(IBlockState state)
     {
         return false;
     }
-	
+
     private boolean canBlockStay(World world, BlockPos pos)
     {
         return world.isSideSolid(pos.down(), EnumFacing.UP);
     }
-    
-	@Override
+
+    @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
         return super.canPlaceBlockAt(worldIn, pos) ? this.canBlockStay(worldIn, pos) : false;
     }
-	
-	@Override
+
+    @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
         if (!this.canBlockStay(worldIn, pos))
@@ -107,26 +106,26 @@ public class BlockFallenLeaves extends Block implements IShearable
             worldIn.setBlockToAir(pos);
         }
     }
-	
-	@Override
+
+    @Override
     public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos)
     {
         return true;
     }
-	
-	@Override
+
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return Items.AIR;
     }
 
-	@Override
+    @Override
     public int quantityDropped(Random random)
     {
         return 0;
     }
-	
-	@Override
+
+    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack)
     {
         if (!worldIn.isRemote && stack.getItem() == Items.SHEARS)
@@ -140,19 +139,19 @@ public class BlockFallenLeaves extends Block implements IShearable
         }
     }
 
-	@Override
-	public boolean isShearable(ItemStack item, IBlockAccess world, BlockPos pos)
-	{
-		return true;
-	}
-	
-	@Override
+    @Override
+    public boolean isShearable(ItemStack item, IBlockAccess world, BlockPos pos)
+    {
+        return true;
+    }
+
+    @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
-    	return Blocks.LEAVES.getFlammability(world, pos, face);
+        return Blocks.LEAVES.getFlammability(world, pos, face);
     }
-	
-	@Override
+
+    @Override
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
         return Blocks.LEAVES.getFireSpreadSpeed(world, pos, face);

@@ -1,20 +1,10 @@
 package vibrantjourneys.entities.passive;
 
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIFollowParent;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -31,6 +21,8 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import vibrantjourneys.init.PVJSounds;
 import vibrantjourneys.util.PVJLootTableList;
+
+import java.util.Set;
 
 public class EntityDuck extends EntityAnimal
 {
@@ -81,7 +73,7 @@ public class EntityDuck extends EntityAnimal
         super.onLivingUpdate();
         this.oFlap = this.wingRotation;
         this.oFlapSpeed = this.destPos;
-        this.destPos = (float)((double)this.destPos + (double)(this.onGround ? -1 : 4) * 0.3D);
+        this.destPos = (float) ((double) this.destPos + (double) (this.onGround ? -1 : 4) * 0.3D);
         this.destPos = MathHelper.clamp(this.destPos, 0.0F, 1.0F);
 
         if (!this.onGround && this.wingRotDelta < 1.0F && !this.isInWater())
@@ -89,7 +81,7 @@ public class EntityDuck extends EntityAnimal
             this.wingRotDelta = 1.0F;
         }
 
-        this.wingRotDelta = (float)((double)this.wingRotDelta * 0.9D);
+        this.wingRotDelta = (float) ((double) this.wingRotDelta * 0.9D);
 
         if (!this.onGround && this.motionY < 0.0D)
         {
@@ -128,11 +120,11 @@ public class EntityDuck extends EntityAnimal
         this.playSound(SoundEvents.ENTITY_CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-	@Override
-	protected ResourceLocation getLootTable()
-	{
-		return PVJLootTableList.DUCK;
-	}
+    @Override
+    protected ResourceLocation getLootTable()
+    {
+        return PVJLootTableList.DUCK;
+    }
 
     @Override
     public EntityDuck createChild(EntityAgeable ageable)
@@ -146,12 +138,12 @@ public class EntityDuck extends EntityAnimal
         return TEMPTATION_ITEMS.contains(stack.getItem());
     }
 
-	@Override
+    @Override
     public boolean getCanSpawnHere()
     {
-		if(this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
-			return false;
-		
-		return true;
+        if (this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
+            return false;
+
+        return true;
     }
 }

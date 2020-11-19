@@ -46,21 +46,21 @@ public class RenderWatcher extends RenderLiving<EntityWatcher>
             GlStateManager.depthMask(true);
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            float f2 = (float)entity.world.getTotalWorldTime() + partialTicks;
+            float f2 = (float) entity.world.getTotalWorldTime() + partialTicks;
             float f3 = f2 * 0.5F % 1.0F;
             float f4 = entity.getEyeHeight();
             GlStateManager.pushMatrix();
-            GlStateManager.translate((float)x, (float)y + f4, (float)z);
-            Vec3d vec3d = this.getPosition(entitylivingbase, (double)entitylivingbase.height * 0.5D, partialTicks);
-            Vec3d vec3d1 = this.getPosition(entity, (double)f4, partialTicks);
+            GlStateManager.translate((float) x, (float) y + f4, (float) z);
+            Vec3d vec3d = this.getPosition(entitylivingbase, (double) entitylivingbase.height * 0.5D, partialTicks);
+            Vec3d vec3d1 = this.getPosition(entity, (double) f4, partialTicks);
             Vec3d vec3d2 = vec3d.subtract(vec3d1);
-            double d0 = vec3d2.length() + 1.0D;
+            double d0 = vec3d2.lengthVector() + 1.0D;
             vec3d2 = vec3d2.normalize();
-            float f5 = (float)Math.acos(vec3d2.y);
-            float f6 = (float)Math.atan2(vec3d2.z, vec3d2.x);
-            GlStateManager.rotate((((float)Math.PI / 2F) + -f6) * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(f5 * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
-            double d1 = (double)f2 * 0.05D * -1.5D;
+            float f5 = (float) Math.acos(vec3d2.y);
+            float f6 = (float) Math.atan2(vec3d2.z, vec3d2.x);
+            GlStateManager.rotate((((float) Math.PI / 2F) + -f6) * (180F / (float) Math.PI), 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(f5 * (180F / (float) Math.PI), 1.0F, 0.0F, 0.0F);
+            double d1 = (double) f2 * 0.05D * -1.5D;
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
             double d4 = 0.0D + Math.cos(d1 + 2.356194490192345D) * 0.282D;
             double d5 = 0.0D + Math.sin(d1 + 2.356194490192345D) * 0.282D;
@@ -78,12 +78,12 @@ public class RenderWatcher extends RenderLiving<EntityWatcher>
             double d17 = 0.0D + Math.sin(d1 + (Math.PI / 2D)) * 0.2D;
             double d18 = 0.0D + Math.cos(d1 + (Math.PI * 3D / 2D)) * 0.2D;
             double d19 = 0.0D + Math.sin(d1 + (Math.PI * 3D / 2D)) * 0.2D;
-            double d22 = (double)(-1.0F + f3);
+            double d22 = (double) (-1.0F + f3);
             double d23 = d0 * 2.5D + d22;
             int a = (int) (entity.getAttackAnimationScale() * 255);
             int r = (int) (entity.getAttackAnimationScale() * 100) + 155;
-            
-            
+
+
             bufferbuilder.pos(d12, d0, d13).tex(0.4999D, d23).color(r, 15, 15, a).endVertex();
             bufferbuilder.pos(d12, 0.0D, d13).tex(0.4999D, d22).color(r, 15, 15, a).endVertex();
             bufferbuilder.pos(d14, 0.0D, d15).tex(0.0D, d22).color(r, 15, 15, a).endVertex();
@@ -107,19 +107,19 @@ public class RenderWatcher extends RenderLiving<EntityWatcher>
             GlStateManager.popMatrix();
         }
     }
-    
+
     private Vec3d getPosition(EntityLivingBase entityLivingBaseIn, double p_177110_2_, float p_177110_4_)
     {
-        double d0 = entityLivingBaseIn.lastTickPosX + (entityLivingBaseIn.posX - entityLivingBaseIn.lastTickPosX) * (double)p_177110_4_;
-        double d1 = p_177110_2_ + entityLivingBaseIn.lastTickPosY + (entityLivingBaseIn.posY - entityLivingBaseIn.lastTickPosY) * (double)p_177110_4_;
-        double d2 = entityLivingBaseIn.lastTickPosZ + (entityLivingBaseIn.posZ - entityLivingBaseIn.lastTickPosZ) * (double)p_177110_4_;
+        double d0 = entityLivingBaseIn.lastTickPosX + (entityLivingBaseIn.posX - entityLivingBaseIn.lastTickPosX) * (double) p_177110_4_;
+        double d1 = p_177110_2_ + entityLivingBaseIn.lastTickPosY + (entityLivingBaseIn.posY - entityLivingBaseIn.lastTickPosY) * (double) p_177110_4_;
+        double d2 = entityLivingBaseIn.lastTickPosZ + (entityLivingBaseIn.posZ - entityLivingBaseIn.lastTickPosZ) * (double) p_177110_4_;
         return new Vec3d(d0, d1, d2);
     }
-    
+
     @Override
     protected void preRenderCallback(EntityWatcher entitylivingbaseIn, float partialTickTime)
     {
-    	GlStateManager.scale(1.6F, 1.6F, 1.6F);
+        GlStateManager.scale(1.6F, 1.6F, 1.6F);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class RenderWatcher extends RenderLiving<EntityWatcher>
     {
         return TEXTURE;
     }
-    
+
     public static class Factory implements IRenderFactory<EntityWatcher>
     {
         @Override

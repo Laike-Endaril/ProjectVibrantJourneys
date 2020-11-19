@@ -9,6 +9,6 @@ public class BlockPVJCactus extends BlockPVJPlant
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos)
     {
-    	return EnumPlantType.Desert;
+        return EnumPlantType.Desert;
     }
 }

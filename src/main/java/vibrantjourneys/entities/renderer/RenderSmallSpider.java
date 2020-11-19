@@ -21,7 +21,7 @@ public class RenderSmallSpider<T extends EntitySmallSpider> extends RenderLiving
         super(renderManagerIn, new ModelSpider(), 0.1F);
         this.addLayer(new LayerSmallSpiderEyes<T>(this));
     }
-    
+
     @Override
     protected void preRenderCallback(EntitySmallSpider entitylivingbaseIn, float partialTickTime)
     {
@@ -39,7 +39,7 @@ public class RenderSmallSpider<T extends EntitySmallSpider> extends RenderLiving
     {
         return SPIDER_TEXTURES;
     }
-    
+
     public static class Factory implements IRenderFactory<EntitySmallSpider>
     {
         @Override

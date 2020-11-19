@@ -1,9 +1,5 @@
 package vibrantjourneys.items;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
@@ -14,23 +10,26 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class ItemMysticalFood extends ItemFood
-{	
-	public ItemMysticalFood(ItemFood baseFood)
-	{
-		super(baseFood.getHealAmount(ItemStack.EMPTY), baseFood.getSaturationModifier(ItemStack.EMPTY), false);
-		this.setAlwaysEdible();
+{
+    public ItemMysticalFood(ItemFood baseFood)
+    {
+        super(baseFood.getHealAmount(ItemStack.EMPTY), baseFood.getSaturationModifier(ItemStack.EMPTY), false);
+        this.setAlwaysEdible();
         this.setMaxStackSize(1);
-	}
-	
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-		PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
+        PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
     }
-	
-	@Override
+
+    @Override
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player)
     {
         if (!worldIn.isRemote)

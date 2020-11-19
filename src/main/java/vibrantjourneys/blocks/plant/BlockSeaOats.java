@@ -1,11 +1,6 @@
 package vibrantjourneys.blocks.plant;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
@@ -28,6 +23,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import vibrantjourneys.util.IPropertyHelper;
 
+import javax.annotation.Nullable;
+import java.util.Random;
+
 public class BlockSeaOats extends BlockBush implements IPropertyHelper
 {
     public static final PropertyEnum<BlockSeaOats.EnumBlockHalf> HALF = PropertyEnum.<BlockSeaOats.EnumBlockHalf>create("half", BlockSeaOats.EnumBlockHalf.class);
@@ -49,11 +47,11 @@ public class BlockSeaOats extends BlockBush implements IPropertyHelper
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos)
     {
-    	if(!world.isAirBlock(pos.up()))
-    	{
-    		return false;	
-    	}
-    	
+        if (!world.isAirBlock(pos.up()))
+        {
+            return false;
+        }
+
         Block block = world.getBlockState(pos.down()).getBlock();
 
         if (block != Blocks.GRASS && block != Blocks.DIRT && block != Blocks.SAND)
@@ -72,8 +70,8 @@ public class BlockSeaOats extends BlockBush implements IPropertyHelper
             boolean flag = state.getValue(HALF) == BlockSeaOats.EnumBlockHalf.UPPER;
             BlockPos blockpos = flag ? pos : pos.up();
             BlockPos blockpos1 = flag ? pos.down() : pos;
-            Block block = (Block)(flag ? this : world.getBlockState(blockpos).getBlock());
-            Block block1 = (Block)(flag ? world.getBlockState(blockpos1).getBlock() : this);
+            Block block = (Block) (flag ? this : world.getBlockState(blockpos).getBlock());
+            Block block1 = (Block) (flag ? world.getBlockState(blockpos1).getBlock() : this);
 
             if (!flag) this.dropBlockAsItem(world, pos, state, 0); //Forge move above the setting to air.
 
@@ -99,18 +97,18 @@ public class BlockSeaOats extends BlockBush implements IPropertyHelper
         }
         else
         {
-        	Block block = world.getBlockState(pos.down()).getBlock();
-        	boolean isSoil = (block == Blocks.SAND || block == Blocks.GRASS || block == Blocks.DIRT);
-        	
+            Block block = world.getBlockState(pos.down()).getBlock();
+            boolean isSoil = (block == Blocks.SAND || block == Blocks.GRASS || block == Blocks.DIRT);
+
             IBlockState iblockstate = world.getBlockState(pos.up());
             return iblockstate.getBlock() == this && isSoil;
         }
     }
-    
+
     @Override
     public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos)
     {
-    	return false;
+        return false;
     }
 
     @Override
@@ -135,13 +133,13 @@ public class BlockSeaOats extends BlockBush implements IPropertyHelper
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-    	this.placeAt(worldIn, pos, 2);
+        this.placeAt(worldIn, pos, 2);
     }
 
     @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack)
     {
-    	super.harvestBlock(worldIn, player, pos, state, te, stack);
+        super.harvestBlock(worldIn, player, pos, state, te, stack);
     }
 
     @Override
@@ -192,13 +190,19 @@ public class BlockSeaOats extends BlockBush implements IPropertyHelper
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {HALF});
+        return new BlockStateContainer(this, new IProperty[]{HALF});
     }
 
     @Override
     public Block.EnumOffsetType getOffsetType()
     {
         return Block.EnumOffsetType.XZ;
+    }
+
+    @Override
+    public ImmutableList<IBlockState> getProperties()
+    {
+        return this.blockState.getValidStates();
     }
 
     public static enum EnumBlockHalf implements IStringSerializable
@@ -216,10 +220,4 @@ public class BlockSeaOats extends BlockBush implements IPropertyHelper
             return this == UPPER ? "upper" : "lower";
         }
     }
-
-	@Override
-	public ImmutableList<IBlockState> getProperties()
-	{
-		return this.blockState.getValidStates();
-	}
 }
