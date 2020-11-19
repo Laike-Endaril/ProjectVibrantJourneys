@@ -159,8 +159,8 @@ public class WorldGenWillowTree extends WorldGenAbstractTree
                 {
                 	if(rand.nextInt(8) < 5)
                 	{
-                    	x += facing.getFrontOffsetX();
-                    	z += facing.getFrontOffsetZ();
+                    	x += facing.getXOffset();
+                    	z += facing.getZOffset();
                 	}
                 	
                 	if(rand.nextInt(6) < 5)
@@ -212,8 +212,8 @@ public class WorldGenWillowTree extends WorldGenAbstractTree
             IBlockState state = world.getBlockState(pos);
             for(int h = 0; h <= length; h++)
             {
-            	x += facing.getFrontOffsetX();
-            	z += facing.getFrontOffsetZ();
+            	x += facing.getXOffset();
+            	z += facing.getZOffset();
             	
             	if(rand.nextInt(4) < 2)
             		y += 1;
@@ -245,7 +245,7 @@ public class WorldGenWillowTree extends WorldGenAbstractTree
                             {
                             	if(Math.abs(up) != 1 && Math.abs(west) != 1 && Math.abs(north) != 1)
                             	{
-                                	if(rand.nextInt(13) < 5)
+                                	if(rand.nextInt(14) < 3)
                                 	{
                                 		this.setBlockAndNotifyAdequately(world, leafpos, LEAVES);
                                 		outerLeaves.add(leafpos);

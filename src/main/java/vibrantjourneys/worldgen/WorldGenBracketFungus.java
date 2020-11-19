@@ -7,13 +7,16 @@ import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import vibrantjourneys.blocks.BlockBracketFungus;
+import vibrantjourneys.blocks.plant.BlockBracketFungus;
 import vibrantjourneys.init.PVJBlocks;
+import vibrantjourneys.init.PVJWorldGen;
 import vibrantjourneys.util.PVJConfig;
 
 public class WorldGenBracketFungus implements IWorldGenerator
@@ -29,20 +32,23 @@ public class WorldGenBracketFungus implements IWorldGenerator
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator generator, IChunkProvider provider)
-	{
-		int x = chunkX * 16 + 8;
-		int z = chunkZ * 16 + 8;
+	{	
+		for(int id : PVJWorldGen.dimensionBlacklist)
+			if(world.provider == DimensionManager.getProvider(id))
+				return;
 		
-		Biome biome = world.getBiomeForCoordsBody(new BlockPos(x, 0, z));
+		ChunkPos chunkPos = world.getChunk(chunkX, chunkZ).getPos();
+		Biome biome = world.getBiomeForCoordsBody(chunkPos.getBlock(0, 0, 0));
+		
 		if(Arrays.asList(biomes).contains(biome))
 		{
 			for(int i = 0; i < frequency; i++)
 			{
-				int xPos = x + random.nextInt(16);
-				int zPos = z + random.nextInt(16);
-				int yPos = 63 + random.nextInt(100);
+		        int xPos = random.nextInt(16) + 8;
+		        int zPos = random.nextInt(16) + 8;
+		        int y = world.getHeight(chunkPos.getBlock(0, 0, 0).add(xPos, 0, zPos)).getY() + random.nextInt(16) - random.nextInt(16);
+		        BlockPos pos = chunkPos.getBlock(0, 0, 0).add(xPos, y, zPos);
 				
-				BlockPos pos = new BlockPos(xPos, yPos, zPos);
 				IBlockState state = world.getBlockState(pos);
 				
 				if(state.getBlock() instanceof BlockLog)

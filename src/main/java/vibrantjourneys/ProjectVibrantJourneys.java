@@ -1,5 +1,7 @@
 package vibrantjourneys;
 
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraftforge.common.MinecraftForge;
@@ -10,19 +12,16 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import vibrantjourneys.crafting.PVJOreDictionary;
 import vibrantjourneys.init.PVJBiomes;
 import vibrantjourneys.init.PVJBlocks;
+import vibrantjourneys.init.PVJCrafting;
 import vibrantjourneys.init.PVJEntities;
 import vibrantjourneys.init.PVJItems;
-import vibrantjourneys.init.PVJRecipes;
 import vibrantjourneys.init.PVJRegistryEvents;
 import vibrantjourneys.init.PVJTileEntities;
 import vibrantjourneys.init.PVJWorldGen;
 import vibrantjourneys.util.BiomeReference;
-import vibrantjourneys.util.GuiHandler;
 import vibrantjourneys.util.PVJConfig;
 import vibrantjourneys.util.PVJEvents;
 import vibrantjourneys.util.Reference;
@@ -37,20 +36,30 @@ public class ProjectVibrantJourneys
     @SidedProxy(clientSide = Reference.CLIENT, serverSide = Reference.SERVER)
     public static ICommonProxy proxy;
 
+    public static Logger logger;
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	logger = event.getModLog();
+    	
     	//BoP support :)
     	if(Loader.isModLoaded("biomesoplenty"))
     	{
-    		System.out.println("Project: Vibrant Journeys detected that you also have Biomes O' Plenty installed!");
+    		logger.info("Project: Vibrant Journeys detected that you also have Biomes O' Plenty installed! Enjoy your adventures!");
     		Reference.isBOPLoaded = true;
     	}
     	//Traverse support :)
     	if(Loader.isModLoaded("traverse"))
     	{
-    		System.out.println("Project: Vibrant Journeys detected that you also have Traverse installed!");
+    		logger.info("Project: Vibrant Journeys detected that you also have Traverse installed! Safe travels!");
     		Reference.isTraverseLoaded = true;
+    	}
+    	//Serene Seasons support :)
+    	if(Loader.isModLoaded("sereneseasons"))
+    	{
+    		logger.info("Project: Vibrant Journeys detected that you also have Serene Seasons installed! Good choice!");
+    		Reference.isSereneSeasonsLoaded = true;
     	}
     	
     	PVJEntities.initEntities();
@@ -68,10 +77,8 @@ public class ProjectVibrantJourneys
     public void init(FMLInitializationEvent event)
     {
     	proxy.registerTESRs();
-    	NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     	
-    	PVJOreDictionary.setValues();
-    	PVJRecipes.initRecipes();
+    	PVJCrafting.initCrafting();
     	
     	BiomeReference.loadAllBiomeReferences();
     	PVJWorldGen.initWorldGen();
@@ -79,7 +86,7 @@ public class ProjectVibrantJourneys
     	PVJEntities.addSpawns();
     	
     	if(PVJConfig.misc.restrictSquidsToOceans)
-    		EntityRegistry.removeSpawn(EntitySquid.class, EnumCreatureType.WATER_CREATURE, BiomeReference.getValidBiomes(BiomeReference.FRESHWATER_BIOMES));
+    		EntityRegistry.removeSpawn(EntitySquid.class, EnumCreatureType.WATER_CREATURE, BiomeReference.getBiomes(BiomeReference.FRESHWATER_BIOMES));
     	
 		ProjectVibrantJourneys.proxy.registerBlockColors();
 		

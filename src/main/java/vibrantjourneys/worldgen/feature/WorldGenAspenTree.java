@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.IPlantable;
-import vibrantjourneys.blocks.BlockPVJLeaves;
+import vibrantjourneys.blocks.wood.BlockPVJLeaves;
 import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.util.EnumLeafType;
 import vibrantjourneys.util.EnumWoodType;
@@ -99,8 +99,8 @@ public class WorldGenAspenTree extends WorldGenAbstractTree
                         {
                         	for(EnumFacing facing : facings)
                         	{
-                        		int x = position.getX() + facing.getFrontOffsetX();
-                        		int z = position.getZ() + facing.getFrontOffsetZ();
+                        		int x = position.getX() + facing.getXOffset();
+                        		int z = position.getZ() + facing.getZOffset();
                         		BlockPos branchPos = new BlockPos(x, y, z);
         						state = world.getBlockState(branchPos);
                                 if (state.getBlock().isAir(state, world, branchPos) || state.getBlock().isLeaves(state, world, branchPos))
@@ -121,8 +121,8 @@ public class WorldGenAspenTree extends WorldGenAbstractTree
                         		
                         		for(int j = 0; j < 3; j++)
                         		{
-                        			x += facing.getFrontOffsetX();
-                        			z += facing.getFrontOffsetZ();
+                        			x += facing.getXOffset();
+                        			z += facing.getZOffset();
                         			
                         			if(j == 2)
                         			{

@@ -7,11 +7,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import vibrantjourneys.init.PVJWorldGen;
 import vibrantjourneys.util.PVJConfig;
 
 public class WorldGenFallenLeaves implements IWorldGenerator
@@ -31,11 +34,13 @@ public class WorldGenFallenLeaves implements IWorldGenerator
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
 	{
 		Random rand = new Random();
-		//generating fallen leaves in a forest without adding +8 caused the worst cascading world gen lag i have ever seen
-		int x = chunkX * 16 + 8;
-		int z = chunkZ * 16 + 8;
+		ChunkPos chunkPos = world.getChunk(chunkX, chunkZ).getPos();
 		
-		Biome biome = world.getBiomeForCoordsBody(new BlockPos(x, 0, z));
+		for(int id : PVJWorldGen.dimensionBlacklist)
+			if(world.provider == DimensionManager.getProvider(id))
+				return;
+		
+		Biome biome = world.getBiomeForCoordsBody(chunkPos.getBlock(0, 0, 0));
 		
 		boolean isValidBiome = false;
 		for(int i = 0; i < biomes.length; i++)
@@ -51,36 +56,22 @@ public class WorldGenFallenLeaves implements IWorldGenerator
 		{
 			for(int i = 0; i < frequency; i++)
 			{
-				int xPos = x + rand.nextInt(16);
-				int zPos = z + rand.nextInt(16);
+		        int xPos = rand.nextInt(16) + 8;
+		        int zPos = rand.nextInt(16) + 8;
+
+		        int y = world.getHeight(chunkPos.getBlock(0, 0, 0).add(xPos, 0, zPos)).getY() + rand.nextInt(8) - rand.nextInt(8);
+		        BlockPos pos = chunkPos.getBlock(0, 0, 0).add(xPos, y, zPos);
 				
-				for(int j = 0; j < 10; j++)
+				if(world.isSideSolid(pos.down(), EnumFacing.UP))
 				{
-					int yPos = 25 + rand.nextInt(150);
-					
-					BlockPos pos = new BlockPos(xPos, yPos, zPos);
-					
-					if(world.isSideSolid(pos.down(), EnumFacing.UP))
+					IBlockState state = world.getBlockState(pos);
+					if(world.isAirBlock(pos) || world.getBlockState(pos).getBlock().isReplaceable(world, pos))
 					{
-						IBlockState state = world.getBlockState(pos);
-						if(world.isAirBlock(pos) || world.getBlockState(pos).getBlock().isReplaceable(world, pos))
+						if(state.getMaterial() != Material.WATER)
 						{
-							if(state.getMaterial() != Material.WATER)
+							if(y > 60 || (y < 60 && world.canSeeSky(pos)))
 							{
-								if(yPos < 60 && world.canSeeSky(pos))
-								{
-									if(world.setBlockState(pos, block.getDefaultState()))
-									{
-										break;
-									}
-								}
-								else if(yPos > 60)
-								{
-									if(world.setBlockState(pos, block.getDefaultState()))
-									{
-										break;
-									}
-								}
+								world.setBlockState(pos, block.getDefaultState());
 							}
 						}
 					}

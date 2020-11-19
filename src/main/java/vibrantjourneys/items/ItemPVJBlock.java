@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import vibrantjourneys.blocks.BlockPVJLeaves;
+import vibrantjourneys.blocks.wood.BlockPVJLeaves;
 
 public class ItemPVJBlock extends ItemBlock
 {
@@ -30,9 +30,9 @@ public class ItemPVJBlock extends ItemBlock
     }
 	
 	@Override
-	public String getUnlocalizedName(ItemStack stack)
+	public String getTranslationKey(ItemStack stack)
 	{
-        return super.getUnlocalizedName();
+        return super.getTranslationKey();
 	}
 	
 	@Override

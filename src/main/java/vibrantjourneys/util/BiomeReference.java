@@ -36,6 +36,10 @@ public class BiomeReference
 	public static final ArrayList<Biome> MOSSY_COBBLESTONE_BIOMES = new ArrayList<Biome>();
 	public static final ArrayList<Biome> SANDSTONE_BIOMES = new ArrayList<Biome>();
 	public static final ArrayList<Biome> LILYPAD_BIOMES = new ArrayList<Biome>();
+	public static final ArrayList<Biome> MOUNTAIN_BIOMES = new ArrayList<Biome>();
+	public static final ArrayList<Biome> COYOTE_BIOMES = new ArrayList<Biome>();
+	public static final ArrayList<Biome> MARINE_BIOMES = new ArrayList<Biome>();
+	public static final ArrayList<Biome> DUCK_BIOMES = new ArrayList<Biome>();
 	
 	//TREES LISTS
 	//VANILLA TREES
@@ -66,6 +70,9 @@ public class BiomeReference
 	public static final ArrayList<Biome> BAOBAB_TREES = new ArrayList<Biome>();
 	public static final ArrayList<Biome> COTTONWOOD_TREES = new ArrayList<Biome>();
 	public static final ArrayList<Biome> JUNIPER_TREES = new ArrayList<Biome>();
+	public static final ArrayList<Biome> WHITE_CHERRY_BLOSSOM_TREES = new ArrayList<Biome>();
+	public static final ArrayList<Biome> PINK_CHERRY_BLOSSOM_TREES = new ArrayList<Biome>();
+	public static final ArrayList<Biome> JACARANDA_TREES = new ArrayList<Biome>();
 	
 	//BOP TREES
 	public static final ArrayList<Biome> BOP_MANGROVE_TREES = new ArrayList<Biome>();
@@ -117,6 +124,8 @@ public class BiomeReference
 		loadBaobabTrees();
 		loadCottonwoodTrees();
 		loadJuniperTrees();
+		loadCherryBlossomTrees();
+		loadJacarandaTrees();
 		
 		ALL_BIOMES.addAll(ForgeRegistries.BIOMES.getValuesCollection());
 		OVERWORLD_BIOMES.addAll(ALL_BIOMES.stream()
@@ -131,18 +140,25 @@ public class BiomeReference
 		BEACH_BIOMES.addAll(OVERWORLD_BIOMES.stream()
 				.filter(biome -> BiomeDictionary.hasType(biome, Type.BEACH))
 				.collect(Collectors.toList()));
+		MARINE_BIOMES.addAll(BEACH_BIOMES);
+		MARINE_BIOMES.addAll(OVERWORLD_BIOMES.stream()
+				.filter(biome -> BiomeDictionary.hasType(biome, Type.OCEAN))
+				.collect(Collectors.toList()));
 		loadMesaBiomes();
 		loadDesertBiomes();
 		loadMossyCobblestoneBiomes();
 		loadSandstoneBiomes();
 		loadLilyPadBiomes();
+		loadMountainBiomes();
+		loadCoyoteBiomes();
+		loadDuckBiomes();
 		
 		if(Reference.isBOPLoaded)
 			BiomeReferenceBOP.loadBOPBiomes();
 		if(Reference.isTraverseLoaded)
 			BiomeReferenceTraverse.loadTraverseBiomes();
 	}
-	
+
 	public static void loadOakTrees()
 	{
 		OAK_TREES.add(Biomes.FOREST);
@@ -191,7 +207,6 @@ public class BiomeReference
 		SPRUCE_TREES_SPARSE.add(Biomes.EXTREME_HILLS_EDGE);
 		SPRUCE_TREES_SPARSE.add(PVJBiomes.boreal_forest);
 		SPRUCE_TREES_SPARSE.add(PVJBiomes.snowy_boreal_forest);
-		SPRUCE_TREES_SPARSE.add(PVJBiomes.alpine_heights);
 	}
 	
 	public static void loadJungleTrees()
@@ -210,8 +225,6 @@ public class BiomeReference
 		ACACIA_TREES.add(Biomes.SAVANNA_PLATEAU);
 		ACACIA_TREES.add(Biomes.MUTATED_SAVANNA);
 		ACACIA_TREES.add(Biomes.MUTATED_SAVANNA_ROCK);
-		
-		ACACIA_TREES_SPARSE.add(PVJBiomes.baobab_fields);
 	}
 	
 	public static void loadDarkOakTrees()
@@ -254,14 +267,12 @@ public class BiomeReference
 	{
 		FIR_TREES.add(PVJBiomes.boreal_forest);
 		FIR_TREES.add(PVJBiomes.snowy_boreal_forest);
-		FIR_TREES.add(PVJBiomes.alpine_heights);
 	}
 	
 	public static void loadPineTrees()
 	{
 		PINE_TREES.add(PVJBiomes.boreal_forest);
 		PINE_TREES.add(PVJBiomes.snowy_boreal_forest);
-		PINE_TREES.add(PVJBiomes.alpine_heights);
 	}
 	
 	public static void loadAspenTrees()
@@ -281,13 +292,10 @@ public class BiomeReference
 		BAOBAB_TREES.add(Biomes.SAVANNA_PLATEAU);
 		BAOBAB_TREES.add(Biomes.MUTATED_SAVANNA);
 		BAOBAB_TREES.add(Biomes.MUTATED_SAVANNA_ROCK);
-		BAOBAB_TREES.add(PVJBiomes.baobab_fields);
 	}
 	
 	public static void loadCottonwoodTrees()
 	{
-		COTTONWOOD_TREES.add(Biomes.PLAINS);
-		COTTONWOOD_TREES.add(Biomes.MUTATED_PLAINS);
 		COTTONWOOD_TREES.add(PVJBiomes.prairie);
 	}
 	
@@ -299,6 +307,25 @@ public class BiomeReference
 		JUNIPER_TREES.add(Biomes.MUTATED_MESA);
 		JUNIPER_TREES.add(Biomes.MUTATED_MESA_CLEAR_ROCK);
 		JUNIPER_TREES.add(Biomes.MUTATED_MESA_ROCK);
+	}
+	
+	public static void loadCherryBlossomTrees()
+	{
+		WHITE_CHERRY_BLOSSOM_TREES.add(Biomes.MUTATED_FOREST);
+		WHITE_CHERRY_BLOSSOM_TREES.add(PVJBiomes.blossoming_fields);
+		PINK_CHERRY_BLOSSOM_TREES.add(Biomes.MUTATED_FOREST);
+		PINK_CHERRY_BLOSSOM_TREES.add(PVJBiomes.blossoming_fields);
+	}
+	
+	public static void loadJacarandaTrees()
+	{
+		JACARANDA_TREES.add(Biomes.JUNGLE);
+		JACARANDA_TREES.add(Biomes.JUNGLE_EDGE);
+		JACARANDA_TREES.add(Biomes.JUNGLE_HILLS);
+		JACARANDA_TREES.add(Biomes.MUTATED_JUNGLE);
+		JACARANDA_TREES.add(Biomes.MUTATED_JUNGLE_EDGE);
+		JACARANDA_TREES.add(Biomes.MUTATED_FOREST);
+		JACARANDA_TREES.add(PVJBiomes.blossoming_fields);
 	}
 	
 	public static void loadMesaBiomes()
@@ -330,6 +357,7 @@ public class BiomeReference
 		MOSSY_COBBLESTONE_BIOMES.add(Biomes.JUNGLE_HILLS);
 		MOSSY_COBBLESTONE_BIOMES.add(Biomes.MUTATED_JUNGLE);
 		MOSSY_COBBLESTONE_BIOMES.add(Biomes.MUTATED_JUNGLE_EDGE);
+		MOSSY_COBBLESTONE_BIOMES.add(PVJBiomes.overgrown_spires);
 	}
 	
 	public static void loadSandstoneBiomes()
@@ -352,6 +380,32 @@ public class BiomeReference
 									LILYPAD_BIOMES.add(biome);
 		}
 	}
+	
+	public static void loadMountainBiomes()
+	{
+		MOUNTAIN_BIOMES.add(Biomes.EXTREME_HILLS);
+		MOUNTAIN_BIOMES.add(Biomes.EXTREME_HILLS_EDGE);
+		MOUNTAIN_BIOMES.add(Biomes.EXTREME_HILLS_WITH_TREES);
+		MOUNTAIN_BIOMES.add(Biomes.MUTATED_EXTREME_HILLS);
+		MOUNTAIN_BIOMES.add(Biomes.MUTATED_EXTREME_HILLS_WITH_TREES);
+	}
+	
+	public static void loadCoyoteBiomes()
+	{
+		COYOTE_BIOMES.addAll(DESERT_BIOMES);
+		COYOTE_BIOMES.addAll(MESA_BIOMES);
+		COYOTE_BIOMES.add(PVJBiomes.prairie);
+	}
+	
+	public static void loadDuckBiomes()
+	{
+		DUCK_BIOMES.addAll(FRESHWATER_BIOMES);
+		DUCK_BIOMES.removeAll(DESERT_BIOMES);
+		DUCK_BIOMES.removeAll(MESA_BIOMES);
+		DUCK_BIOMES.removeAll(BiomeDictionary.getBiomes(Type.JUNGLE));
+		DUCK_BIOMES.removeAll(BiomeDictionary.getBiomes(Type.SAVANNA));
+		DUCK_BIOMES.removeAll(SNOWY_BIOMES);
+	}
     
     //REMOVE IN 1.13
     //---------------------------------------------------
@@ -366,7 +420,7 @@ public class BiomeReference
 	 * @param biomeList an ArrayList of biome values
 	 * @return array version of biomeList
 	 */
-	public static Biome[] getValidBiomes(ArrayList<Biome> biomeList)
+	public static Biome[] getBiomes(ArrayList<Biome> biomeList)
 	{
 		return biomeList.toArray(new Biome[0]);
 	}

@@ -19,6 +19,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySilverfish;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -29,6 +30,7 @@ import net.minecraft.world.World;
 import vibrantjourneys.entities.ai.EntityAIGoonPukeSilverfish;
 import vibrantjourneys.entities.ai.EntityAISilverfishDeathTimer;
 import vibrantjourneys.init.PVJSounds;
+import vibrantjourneys.util.PVJConfig;
 import vibrantjourneys.util.PVJLootTableList;
 
 public class EntityGoon extends EntityMob
@@ -52,7 +54,7 @@ public class EntityGoon extends EntityMob
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityChicken.class, 6.0F, 1.0D, 1.2D));
+        this.tasks.addTask(3, new EntityAIAvoidEntity<EntityChicken>(this, EntityChicken.class, 6.0F, 1.0D, 1.2D));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.applyEntityAI();
     }
@@ -60,8 +62,8 @@ public class EntityGoon extends EntityMob
     protected void applyEntityAI()
     {
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityIronGolem.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityIronGolem>(this, EntityIronGolem.class, true));
     }
 
 	@Override
@@ -111,19 +113,19 @@ public class EntityGoon extends EntityMob
 	@Override
     protected SoundEvent getAmbientSound()
     {
-        return PVJSounds.GOON_AMBIENT;
+        return PVJConfig.entities.replaceGoonSounds ? SoundEvents.ENTITY_ZOMBIE_AMBIENT : PVJSounds.GOON_AMBIENT;
     }
 
 	@Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return PVJSounds.GOON_HURT;
+        return PVJConfig.entities.replaceGoonSounds ? SoundEvents.ENTITY_ZOMBIE_HURT : PVJSounds.GOON_HURT;
     }
 
 	@Override
     protected SoundEvent getDeathSound()
     {
-        return PVJSounds.GOON_DEATH;
+        return PVJConfig.entities.replaceGoonSounds ? SoundEvents.ENTITY_ZOMBIE_DEATH : PVJSounds.GOON_DEATH;
     }
     
     //yeah no one wants to deal with many goons at once
@@ -154,7 +156,7 @@ public class EntityGoon extends EntityMob
         	silverfish.tasks.addTask(10, new EntityAISilverfishDeathTimer(silverfish));
         	silverfish.setPosition(this.posX, this.posY, this.posZ);
         	this.world.spawnEntity(silverfish);
-        	this.playSound(PVJSounds.GOON_PUKE, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+        	this.playSound(PVJConfig.entities.replaceGoonSounds ? SoundEvents.ENTITY_ZOMBIE_HURT : PVJSounds.GOON_PUKE, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
         	silverfish.setAttackTarget(target);
         	
         	incrementSilverfish();

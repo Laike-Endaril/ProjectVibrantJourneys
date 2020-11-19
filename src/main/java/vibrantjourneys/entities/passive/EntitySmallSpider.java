@@ -1,30 +1,23 @@
 package vibrantjourneys.entities.passive;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
+import vibrantjourneys.integration.sereneseasons.PVJSereneSeasons;
+import vibrantjourneys.util.Reference;
 
-public class EntitySmallSpider extends EntityPVJAnimal
+public class EntitySmallSpider extends EntityCritter
 {
     public EntitySmallSpider(World world)
     {
         super(world);
         this.setSize(0.28F, 0.18F);
-    }
-
-    @Override
-    protected void initEntityAI()
-    {
-        this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 0.8D));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(6, new EntityAILookIdle(this));
     }
 
     @Override
@@ -64,6 +57,19 @@ public class EntitySmallSpider extends EntityPVJAnimal
     {
 		if(this.world.provider.getDimensionType() != DimensionType.OVERWORLD)
 			return false;
+		
+        Biome biome = world.getBiomeForCoordsBody(this.getPosition());
+        if(BiomeDictionary.hasType(biome, Type.SNOWY))
+        	return false;
+        
+        if(Reference.isSereneSeasonsLoaded)
+        	if(PVJSereneSeasons.canSnowHere(getEntityWorld(), getPosition()))
+        		return false;
+        
+		Block block = this.getEntityWorld().getBlockState(this.getPosition().down()).getBlock();
+		if(block != Blocks.GRASS)
+			return false;
+        
 		return super.getCanSpawnHere();
     }
 }

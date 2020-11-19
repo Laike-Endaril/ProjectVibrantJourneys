@@ -3,9 +3,14 @@
   "modid": "pvj",
   "name": "Project: Vibrant Journeys",
   "description": "A mod that adds new things that spice up your game. Aimed at decorating the world while not being intrusive on gameplay.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
+  "version": "{@pvjVersion}",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
   "authorList": ["jt9"],
-  "credits": "\nLaike_Endaril"
+  "credits": "Notch hehe",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
 }
 ]

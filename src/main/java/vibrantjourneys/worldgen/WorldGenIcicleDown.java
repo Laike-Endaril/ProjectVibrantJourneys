@@ -3,7 +3,6 @@ package vibrantjourneys.worldgen;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -11,8 +10,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import vibrantjourneys.blocks.BlockRockFormation;
+import vibrantjourneys.init.PVJWorldGen;
 
 public class WorldGenIcicleDown implements IWorldGenerator
 {
@@ -40,6 +41,10 @@ public class WorldGenIcicleDown implements IWorldGenerator
 		int x = chunkX * 16 + 8;
 		int z = chunkZ * 16 + 8;
 		
+		for(int id : PVJWorldGen.dimensionBlacklist)
+			if(world.provider == DimensionManager.getProvider(id))
+				return;
+		
 		Biome biome = world.getBiomeForCoordsBody(new BlockPos(x, 0, z));
 		boolean isValidBiome = false;
 		for(int i = 0; i < biomes.length; i++)
@@ -63,9 +68,9 @@ public class WorldGenIcicleDown implements IWorldGenerator
 				if(world.canSeeSky(pos.down())) //caves only!
 					return;
 				
-				Material material = world.getBlockState(pos.up()).getMaterial();
-
-				if((material == Material.ROCK  || material == Material.PACKED_ICE) && world.isSideSolid(pos.down(), EnumFacing.DOWN))
+				Block up = world.getBlockState(pos.up()).getBlock();
+				
+				if(BlockRockFormation.VALID_SPAWN_BLOCKS.contains(up) && world.isSideSolid(pos.up(), EnumFacing.DOWN))
 				{
 					for(int size = 0; size < 3; size++)
 					{

@@ -34,6 +34,7 @@ public class BlockFallenLeaves extends Block implements IShearable
 	        this.setHardness(0.1F);
 	        this.setLightOpacity(1);
 	        this.setSoundType(SoundType.PLANT);
+	        Blocks.FIRE.setFireInfo(this, 30, 60);
 	}
 
 	@Override
@@ -69,9 +70,9 @@ public class BlockFallenLeaves extends Block implements IShearable
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
+    public BlockRenderLayer getRenderLayer()
     {
-        return Blocks.LEAVES.getBlockLayer();
+        return Blocks.LEAVES.getRenderLayer();
     }
 	
 	@Override

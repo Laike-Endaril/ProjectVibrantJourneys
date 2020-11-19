@@ -1,403 +1,243 @@
 package vibrantjourneys.worldgen.feature;
 
-import java.util.List;
 import java.util.Random;
 
-import com.google.common.collect.Lists;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockHardenedClay;
+import net.minecraft.block.BlockSand;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import vibrantjourneys.blocks.BlockPVJLeaves;
+import net.minecraftforge.common.IPlantable;
 import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.util.EnumLeafType;
 import vibrantjourneys.util.EnumWoodType;
 
 public class WorldGenCottonwoodTree extends WorldGenAbstractTree
 {
-    private static final IBlockState LOG = PVJBlocks.LOGS.get(EnumWoodType.COTTONWOOD.getID()).getDefaultState();
-    
-    private static final IBlockState LEAF = PVJBlocks.LEAVES.get(EnumLeafType.COTTONWOOD.getID()).getDefaultState()
-    		.withProperty(BlockPVJLeaves.CHECK_DECAY, Boolean.valueOf(false));
-    
-    private Random rand;
-    private World world;
-    private BlockPos basePos = BlockPos.ORIGIN;
-    int heightLimit;
-    int height;
-    double heightAttenuation = 0.618D;
-    double branchSlope = 0.381D;
-    double scaleWidth = 1.0D;
-    double leafDensity = 1.0D;
-    int trunkSize = 1;
-    int heightLimitLimit = 12;
-    /** Sets the distance limit for how far away the generator will populate leaves from the base leaf node. */
-    int leafDistanceLimit = 4;
-    List<WorldGenCottonwoodTree.FoliageCoordinates> foliageCoords;
+	private static final IBlockState LOG = PVJBlocks.LOGS.get(EnumWoodType.COTTONWOOD.getID()).getDefaultState();
+	private static final IBlockState LEAVES = PVJBlocks.LEAVES.get(EnumLeafType.COTTONWOOD.getID()).getDefaultState();
+	
+	public WorldGenCottonwoodTree(boolean notify)
+	{
+		super(notify);
+	}
 
-    public WorldGenCottonwoodTree(boolean notify)
-    {
-        super(notify);
-    }
+	@Override
+	public boolean generate(World world, Random rand, BlockPos pos)
+	{
+        int i;
 
-    /**
-     * Generates a list of leaf nodes for the tree, to be populated by generateLeaves.
-     */
-    void generateLeafNodeList()
-    {
-        this.height = (int)((double)this.heightLimit * this.heightAttenuation);
-
-        if (this.height >= this.heightLimit)
+        for (i = rand.nextInt(4) + 5; world.getBlockState(pos.down()).getMaterial() == Material.WATER; pos = pos.down())
         {
-            this.height = this.heightLimit - 1;
+            ;
         }
 
-        int i = (int)(1.382D + Math.pow(this.leafDensity * (double)this.heightLimit / 13.0D, 2.0D));
+        boolean flag = true;
 
-        if (i < 1)
+        if (pos.getY() >= 1 && pos.getY() + i + 1 <= 256)
         {
-            i = 1;
-        }
-
-        int j = this.basePos.getY() + this.height;
-        int k = this.heightLimit - this.leafDistanceLimit;
-        this.foliageCoords = Lists.<WorldGenCottonwoodTree.FoliageCoordinates>newArrayList();
-        this.foliageCoords.add(new WorldGenCottonwoodTree.FoliageCoordinates(this.basePos.up(k), j));
-
-        for (; k >= 0; --k)
-        {
-            float f = this.layerSize(k);
-
-            if (f >= 0.0F)
+            for (int j = pos.getY(); j <= pos.getY() + 1 + i; ++j)
             {
-                for (int l = 0; l < i; ++l)
+                int k = 1;
+
+                if (j == pos.getY())
                 {
-                    double d0 = this.scaleWidth * (double)f * ((double)this.rand.nextFloat() + 0.328D);
-                    double d1 = (double)(this.rand.nextFloat() * 2.0F) * Math.PI;
-                    double d2 = d0 * Math.sin(d1) + 0.5D;
-                    double d3 = d0 * Math.cos(d1) + 0.5D;
-                    BlockPos blockpos = this.basePos.add(d2, (double)(k - 1), d3);
-                    BlockPos blockpos1 = blockpos.up(this.leafDistanceLimit);
+                    k = 0;
+                }
 
-                    if (this.checkBlockLine(blockpos, blockpos1) == -1)
+                if (j >= pos.getY() + 1 + i - 2)
+                {
+                    k = 3;
+                }
+
+                BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+
+                for (int l = pos.getX() - k; l <= pos.getX() + k && flag; ++l)
+                {
+                    for (int i1 = pos.getZ() - k; i1 <= pos.getZ() + k && flag; ++i1)
                     {
-                        int i1 = this.basePos.getX() - blockpos.getX();
-                        int j1 = this.basePos.getZ() - blockpos.getZ();
-                        double d4 = (double)blockpos.getY() - Math.sqrt((double)(i1 * i1 + j1 * j1)) * this.branchSlope;
-                        int k1 = d4 > (double)j ? j : (int)d4;
-                        BlockPos blockpos2 = new BlockPos(this.basePos.getX(), k1, this.basePos.getZ());
-
-                        if (this.checkBlockLine(blockpos2, blockpos) == -1)
+                        if (j >= 0 && j < 256)
                         {
-                            this.foliageCoords.add(new WorldGenCottonwoodTree.FoliageCoordinates(blockpos, blockpos2.getY()));
+                            IBlockState iblockstate = world.getBlockState(blockpos$mutableblockpos.setPos(l, j, i1));
+
+                            if (!iblockstate.getBlock().isAir(iblockstate, world, blockpos$mutableblockpos.setPos(l, j, i1)) && !iblockstate.getBlock().isLeaves(iblockstate, world, blockpos$mutableblockpos.setPos(l, j, i1)))
+                            {
+                            	flag = false;
+                            }
+                        }
+                        else
+                        {
+                            flag = false;
                         }
                     }
                 }
             }
         }
-    }
-
-    void crosSection(BlockPos pos, float p_181631_2_, IBlockState p_181631_3_)
-    {
-        int i = (int)((double)p_181631_2_ + 0.618D);
-
-        for (int j = -i; j <= i; ++j)
+        
+        if(!flag)
         {
-            for (int k = -i; k <= i; ++k)
-            {
-                if (Math.pow((double)Math.abs(j) + 0.5D, 2.0D) + Math.pow((double)Math.abs(k) + 0.5D, 2.0D) <= (double)(p_181631_2_ * p_181631_2_))
-                {
-                    BlockPos blockpos = pos.add(j, 0, k);
-                    IBlockState state = this.world.getBlockState(blockpos);
-
-                    if (state.getBlock().isAir(state, world, blockpos) || state.getBlock().isLeaves(state, world, blockpos))
-                    {
-                        this.setBlockAndNotifyAdequately(this.world, blockpos, p_181631_3_);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Gets the rough size of a layer of the tree.
-     */
-    float layerSize(int y)
-    {
-        if ((float)y < (float)this.heightLimit * 0.3F)
-        {
-            return -1.0F;
+        	return false;
         }
         else
         {
-            float f = (float)this.heightLimit / 2.0F;
-            float f1 = f - (float)y;
-            float f2 = MathHelper.sqrt(f * f - f1 * f1);
-
-            if (f1 == 0.0F)
+            BlockPos down = pos.down();
+            IBlockState state = world.getBlockState(down);
+            boolean isSoil = state.getBlock().canSustainPlant(state, world, down, EnumFacing.UP, (IPlantable)Blocks.SAPLING) || state.getBlock() instanceof BlockSand
+            					|| state.getBlock() instanceof BlockHardenedClay;
+            
+            int height = 9 + rand.nextInt(5);
+            int branchHeight1 = 4 + rand.nextInt(3);
+            int branchHeight2 = Math.min(branchHeight1 + 3 + rand.nextInt(3), height);
+            if(branchHeight1 + branchHeight2 > height)
             {
-                f2 = f;
-            }
-            else if (Math.abs(f1) >= f)
-            {
-                return 0.0F;
-            }
-
-            return f2 * 0.5F;
-        }
-    }
-
-    float leafSize(int y)
-    {
-        if (y >= 0 && y < this.leafDistanceLimit)
-        {
-            return y != 0 && y != this.leafDistanceLimit - 1 ? 3.0F : 2.0F;
-        }
-        else
-        {
-            return -1.0F;
-        }
-    }
-
-    /**
-     * Generates the leaves surrounding an individual entry in the leafNodes list.
-     */
-    void generateLeafNode(BlockPos pos)
-    {
-        for (int i = 0; i < this.leafDistanceLimit; ++i)
-        {
-            this.crosSection(pos.up(i), this.leafSize(i), LEAF);
-        }
-    }
-
-    void limb(BlockPos p_175937_1_, BlockPos p_175937_2_, Block p_175937_3_)
-    {
-        BlockPos blockpos = p_175937_2_.add(-p_175937_1_.getX(), -p_175937_1_.getY(), -p_175937_1_.getZ());
-        int i = this.getGreatestDistance(blockpos);
-        float f = (float)blockpos.getX() / (float)i;
-        float f1 = (float)blockpos.getY() / (float)i;
-        float f2 = (float)blockpos.getZ() / (float)i;
-
-        for (int j = 0; j <= i; ++j)
-        {
-            BlockPos blockpos1 = p_175937_1_.add((double)(0.5F + (float)j * f), (double)(0.5F + (float)j * f1), (double)(0.5F + (float)j * f2));
-            BlockLog.EnumAxis blocklog$enumaxis = this.getLogAxis(p_175937_1_, blockpos1);
-            this.setBlockAndNotifyAdequately(this.world, blockpos1, p_175937_3_.getDefaultState().withProperty(BlockLog.LOG_AXIS, blocklog$enumaxis));
-        }
-    }
-
-    /**
-     * Returns the absolute greatest distance in the BlockPos object.
-     */
-    private int getGreatestDistance(BlockPos posIn)
-    {
-        int i = MathHelper.abs(posIn.getX());
-        int j = MathHelper.abs(posIn.getY());
-        int k = MathHelper.abs(posIn.getZ());
-
-        if (k > i && k > j)
-        {
-            return k;
-        }
-        else
-        {
-            return j > i ? j : i;
-        }
-    }
-
-    private BlockLog.EnumAxis getLogAxis(BlockPos p_175938_1_, BlockPos p_175938_2_)
-    {
-        BlockLog.EnumAxis blocklog$enumaxis = BlockLog.EnumAxis.Y;
-        int i = Math.abs(p_175938_2_.getX() - p_175938_1_.getX());
-        int j = Math.abs(p_175938_2_.getZ() - p_175938_1_.getZ());
-        int k = Math.max(i, j);
-
-        if (k > 0)
-        {
-            if (i == k)
-            {
-                blocklog$enumaxis = BlockLog.EnumAxis.X;
-            }
-            else if (j == k)
-            {
-                blocklog$enumaxis = BlockLog.EnumAxis.Z;
-            }
-        }
-
-        return blocklog$enumaxis;
-    }
-
-    /**
-     * Generates the leaf portion of the tree as specified by the leafNodes list.
-     */
-    void generateLeaves()
-    {
-        for (WorldGenCottonwoodTree.FoliageCoordinates worldgenbigtree$foliagecoordinates : this.foliageCoords)
-        {
-            this.generateLeafNode(worldgenbigtree$foliagecoordinates);
-        }
-    }
-
-    /**
-     * Indicates whether or not a leaf node requires additional wood to be added to preserve integrity.
-     */
-    boolean leafNodeNeedsBase(int p_76493_1_)
-    {
-        return (double)p_76493_1_ >= (double)this.heightLimit * 0.2D;
-    }
-
-    /**
-     * Places the trunk for the big tree that is being generated. Able to generate double-sized trunks by changing a
-     * field that is always 1 to 2.
-     */
-    void generateTrunk()
-    {
-        BlockPos blockpos = this.basePos;
-        BlockPos blockpos1 = this.basePos.up(this.height);
-        Block block = LOG.getBlock();
-        this.limb(blockpos, blockpos1, block);
-
-        if (this.trunkSize == 2)
-        {
-            this.limb(blockpos.east(), blockpos1.east(), block);
-            this.limb(blockpos.east().south(), blockpos1.east().south(), block);
-            this.limb(blockpos.south(), blockpos1.south(), block);
-        }
-    }
-
-    /**
-     * Generates additional wood blocks to fill out the bases of different leaf nodes that would otherwise degrade.
-     */
-    void generateLeafNodeBases()
-    {
-        for (WorldGenCottonwoodTree.FoliageCoordinates worldgenbigtree$foliagecoordinates : this.foliageCoords)
-        {
-            int i = worldgenbigtree$foliagecoordinates.getBranchBase();
-            BlockPos blockpos = new BlockPos(this.basePos.getX(), i, this.basePos.getZ());
-
-            if (!blockpos.equals(worldgenbigtree$foliagecoordinates) && this.leafNodeNeedsBase(i - this.basePos.getY()))
-            {
-                this.limb(blockpos, worldgenbigtree$foliagecoordinates, LOG.getBlock());
-            }
-        }
-    }
-
-    /**
-     * Checks a line of blocks in the world from the first coordinate to triplet to the second, returning the distance
-     * (in blocks) before a non-air, non-leaf block is encountered and/or the end is encountered.
-     */
-    int checkBlockLine(BlockPos posOne, BlockPos posTwo)
-    {
-        BlockPos blockpos = posTwo.add(-posOne.getX(), -posOne.getY(), -posOne.getZ());
-        int i = this.getGreatestDistance(blockpos);
-        float f = (float)blockpos.getX() / (float)i;
-        float f1 = (float)blockpos.getY() / (float)i;
-        float f2 = (float)blockpos.getZ() / (float)i;
-
-        if (i == 0)
-        {
-            return -1;
-        }
-        else
-        {
-            for (int j = 0; j <= i; ++j)
-            {
-                BlockPos blockpos1 = posOne.add((double)(0.5F + (float)j * f), (double)(0.5F + (float)j * f1), (double)(0.5F + (float)j * f2));
-
-                if (!this.isReplaceable(world, blockpos1))
-                {
-                    return j;
-                }
+            	height = branchHeight1 + branchHeight2;
             }
 
-            return -1;
-        }
-    }
-
-    public void setDecorationDefaults()
-    {
-        this.leafDistanceLimit = 5;
-    }
-
-    public boolean generate(World worldIn, Random rand, BlockPos position)
-    {
-        this.world = worldIn;
-        this.basePos = position;
-        this.rand = new Random(rand.nextLong());
-
-        if (this.heightLimit == 0)
-        {
-            this.heightLimit = 9 + this.rand.nextInt(this.heightLimitLimit);
-        }
-
-        if (!this.validTreeLocation())
-        {
-            this.world = null; //Fix vanilla Mem leak, holds latest world
-            return false;
-        }
-        else
-        {
-            this.generateLeafNodeList();
-            this.generateLeaves();
-            this.generateTrunk();
-            this.generateLeafNodeBases();
-            this.world = null; //Fix vanilla Mem leak, holds latest world
-            return true;
-        }
-    }
-
-    /**
-     * Returns a boolean indicating whether or not the current location for the tree, spanning basePos to to the height
-     * limit, is valid.
-     */
-    private boolean validTreeLocation()
-    {
-        BlockPos down = this.basePos.down();
-        net.minecraft.block.state.IBlockState state = this.world.getBlockState(down);
-        boolean isSoil = state.getBlock().canSustainPlant(state, this.world, down, net.minecraft.util.EnumFacing.UP, ((net.minecraft.block.BlockSapling)Blocks.SAPLING));
-
-        if (!isSoil)
-        {
-            return false;
-        }
-        else
-        {
-            int i = this.checkBlockLine(this.basePos, this.basePos.up(this.heightLimit - 1));
-
-            if (i == -1)
+            if (isSoil && pos.getY() < world.getHeight() - height - 1)
             {
-                return true;
+            	BlockPos logPos = pos;
+            	
+            	//generate trunk
+            	for(int x = 0; x < height; x++)
+            	{
+            		if(canPlaceLog(world.getBlockState(logPos), world, logPos))
+            		{
+            			world.setBlockState(logPos, LOG);
+            		}
+            		logPos = logPos.up();
+            		if(x > branchHeight2)
+            		{
+            			genLeaves(world, logPos, rand);
+            		}
+            	}
+            	
+            	genBranches(world, pos.up(branchHeight1), rand, 6 + rand.nextInt(4));
+            	genBranches(world, pos.up(branchHeight2), rand, 3 + rand.nextInt(3));
+
             }
-            else if (i < 6)
-            {
-                return false;
-            }
-            else
-            {
-                this.heightLimit = i;
-                return true;
-            }
+        	return true;
         }
-    }
-
-    static class FoliageCoordinates extends BlockPos
-        {
-            private final int branchBase;
-
-            public FoliageCoordinates(BlockPos pos, int p_i45635_2_)
-            {
-                super(pos.getX(), pos.getY(), pos.getZ());
-                this.branchBase = p_i45635_2_;
-            }
-
-            public int getBranchBase()
-            {
-                return this.branchBase;
-            }
-        }
+	}
+	
+	public void genBranches(World world, BlockPos pos, Random rand, int length)
+	{
+    	//generate branches
+    	int branchCount = rand.nextBoolean() ? 3 : 4;
+    	boolean skipBranch = true;
+    	
+    	for(EnumFacing facing : EnumFacing.HORIZONTALS)
+    	{
+    		//if this tree has only 3 branches, skip a random one out of the four horizontal directions
+    		if(skipBranch && rand.nextBoolean() && branchCount == 3)
+    		{
+    			skipBranch = false;
+    			continue;
+    		}
+    		//if none have been skipped, then skip the last one to guarantee 3 branches
+    		if(skipBranch && branchCount == 3 && facing == EnumFacing.HORIZONTALS[3])
+    		{
+    			break;
+    		}
+    		int branchLength = length;
+    		BlockPos branchPos = pos;
+    		
+    		for(int b = 0; b < branchLength; b++)
+    		{
+    			branchPos = branchPos.offset(facing);
+    			
+    			EnumFacing facingB = EnumFacing.Plane.HORIZONTAL.random(rand);
+    			//if facing == facingB, it would leave it gap
+    			if(facingB != facing && rand.nextBoolean())
+    			{
+    				branchPos = branchPos.offset(facingB);
+    			}
+    			//branches grow upwards sometimes
+    			if(rand.nextInt(3) < 1)
+    			{
+    				//sometimes places a log before it goes up
+        			if(canPlaceLog(world.getBlockState(branchPos), world, branchPos) && rand.nextBoolean())
+        			{
+        				world.setBlockState(branchPos, LOG);
+        			}
+        			branchPos = branchPos.up();
+    			}
+    			
+    			if(canPlaceLog(world.getBlockState(branchPos), world, branchPos))
+    			{
+    				world.setBlockState(branchPos, LOG);
+    				genLeaves(world, branchPos, rand);
+    			}
+    		}
+    	}
+	}
+	
+	public void genLeaves(World world, BlockPos pos, Random rand)
+	{
+		for(int x = -2; x <= 2; x++)
+		{
+			for(int y = -1; y <= 2; y++)
+			{
+				for(int z = -2; z <= 2; z++)
+				{
+					BlockPos leafPos = pos.add(x, y, z);
+					if(world.isAirBlock(leafPos))
+					{
+						if(Math.abs(x) == 2 || Math.abs(y) == 2 || Math.abs(z) == 2)
+						{
+							if(rand.nextInt(16) <= 5)
+							{
+								boolean shouldGenLeaves = false;
+								for(EnumFacing facing : EnumFacing.VALUES)
+								{
+									IBlockState state = world.getBlockState(leafPos.offset(facing));
+									if(state.getBlock().isLeaves(state, world, leafPos.offset(facing)))
+									{
+										shouldGenLeaves = true;
+										break;
+									}
+								}
+								
+								if(shouldGenLeaves)
+								{
+									if(Math.abs(x) == Math.abs(z))
+									{
+										if(rand.nextInt(4) == 0)
+											world.setBlockState(leafPos, LEAVES);
+									}
+									else
+									{
+										world.setBlockState(leafPos, LEAVES);
+									}
+								}
+							}
+						}
+						else
+						{
+							world.setBlockState(leafPos, LEAVES);
+						}
+						if(rand.nextInt(8) < 2)
+						{
+							for(int i = 1; i < 2 + rand.nextInt(1); i++)
+							{
+								BlockPos tempPos = leafPos.down(i);
+								if(world.isAirBlock(tempPos))
+								{
+									world.setBlockState(tempPos, LEAVES);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public boolean canPlaceLog(IBlockState state, World world, BlockPos pos)
+	{
+		return state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos);
+	}
 }

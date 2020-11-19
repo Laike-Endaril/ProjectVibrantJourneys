@@ -24,6 +24,7 @@ public class WorldGenPineTree extends WorldGenAbstractTree
         super(notify);
     }
 
+    @Override
     public boolean generate(World world, Random rand, BlockPos position)
     {
         int height = 9 + rand.nextInt(4);
@@ -101,8 +102,8 @@ public class WorldGenPineTree extends WorldGenAbstractTree
                         	if(branch % 2 == 0 && y1 > j)
                         	{
                         		EnumFacing facing = EnumFacing.Plane.HORIZONTAL.random(rand);
-                        		int branchX = position.getX() + facing.getFrontOffsetX();
-                        		int branchZ = position.getZ() + facing.getFrontOffsetZ();
+                        		int branchX = position.getX() + facing.getXOffset();
+                        		int branchZ = position.getZ() + facing.getZOffset();
                         		pos =  new BlockPos(branchX, y, branchZ);
                                 if (state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos))
                                 {

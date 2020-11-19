@@ -8,8 +8,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import vibrantjourneys.blocks.BlockPVJLeaves;
-import vibrantjourneys.blocks.BlockPVJSapling;
+import vibrantjourneys.blocks.wood.BlockPVJLeaves;
+import vibrantjourneys.blocks.wood.BlockPVJSapling;
 import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.util.EnumLeafType;
 import vibrantjourneys.util.EnumWoodType;
@@ -101,8 +101,8 @@ public class WorldGenPalmTree extends WorldGenAbstractTree
 
                     	if(i > trunk)
                     	{
-                    		x += enumfacing.getFrontOffsetX();
-                    		z += enumfacing.getFrontOffsetZ();
+                    		x += enumfacing.getXOffset();
+                    		z += enumfacing.getZOffset();
                     	}
 
                     	BlockPos blockpos = new BlockPos(x, y1, z);

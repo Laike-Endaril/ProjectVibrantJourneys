@@ -3,14 +3,22 @@ package vibrantjourneys.entities.passive;
 import net.minecraft.block.Block;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityAmbientCreature;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.init.PVJSounds;
+import vibrantjourneys.integration.sereneseasons.PVJSereneSeasons;
+import vibrantjourneys.util.Reference;
 
 public class EntityFly extends EntityAmbientCreature
 {
@@ -87,6 +95,18 @@ public class EntityFly extends EntityAmbientCreature
 			float f1 = MathHelper.wrapDegrees(f - this.rotationYaw);
 			this.moveForward = 0.5F;
 			this.rotationYaw += f1;
+			
+	        if(world.getBlockState(this.getPosition()).getBlock() == PVJBlocks.sundew)
+	        {
+	        	this.motionX = 0;
+	        	this.motionY = 0;
+	        	this.motionZ = 0;
+	        	
+	        	if(this.getRNG().nextInt(1000) == 0)
+	        	{
+	        		this.attackEntityFrom(DamageSource.CACTUS, 5.0F);
+	        	}
+	        }
 		}
 		else
 		{
@@ -145,6 +165,19 @@ public class EntityFly extends EntityAmbientCreature
         {
             return false;
         }
+        
+        Biome biome = world.getBiomeForCoordsBody(this.getPosition());
+        if(BiomeDictionary.hasType(biome, Type.SNOWY))
+        	return false;
+        
+        if(Reference.isSereneSeasonsLoaded)
+        	if(PVJSereneSeasons.canSnowHere(getEntityWorld(), getPosition()))
+        		return false;
+        
+		Block block = this.getEntityWorld().getBlockState(this.getPosition().down()).getBlock();
+		if(block != Blocks.GRASS)
+			return false;
+        
 		return super.getCanSpawnHere();
     }
 }

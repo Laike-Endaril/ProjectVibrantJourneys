@@ -3,7 +3,6 @@ package vibrantjourneys.worldgen;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -11,8 +10,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import vibrantjourneys.blocks.BlockRockFormation;
+import vibrantjourneys.init.PVJWorldGen;
 
 public class WorldGenStalagmite implements IWorldGenerator
 {
@@ -39,6 +40,10 @@ public class WorldGenStalagmite implements IWorldGenerator
 		
 		int x = chunkX * 16 + 8;
 		int z = chunkZ * 16 + 8;
+		
+		for(int id : PVJWorldGen.dimensionBlacklist)
+			if(world.provider == DimensionManager.getProvider(id))
+				return;
 		
 		Biome biome = world.getBiomeForCoordsBody(new BlockPos(x, 0, z));
 		boolean isValidBiome = false;
@@ -75,7 +80,8 @@ public class WorldGenStalagmite implements IWorldGenerator
 				
 				if(flag)
 				{
-					if(world.getBlockState(pos.down()).getMaterial() == Material.ROCK && world.isSideSolid(pos.down(), EnumFacing.UP))
+					Block down = world.getBlockState(pos.down()).getBlock();
+					if(BlockRockFormation.VALID_SPAWN_BLOCKS.contains(down) && world.isSideSolid(pos.down(), EnumFacing.UP))
 					{
 						for(int size = 0; size < 3; size++)
 						{

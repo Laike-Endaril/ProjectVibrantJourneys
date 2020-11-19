@@ -24,9 +24,9 @@ public class WorldGenJuniperTree extends WorldGenAbstractTree
 	private static final IBlockState LEAVES = PVJBlocks.LEAVES.get(EnumLeafType.JUNIPER.getID()).getDefaultState();
 	private static final IBlockState LEAVES_BERRIED = PVJBlocks.LEAVES.get(EnumLeafType.JUNIPER_BERRIED.getID()).getDefaultState();
 	
-	public WorldGenJuniperTree()
+	public WorldGenJuniperTree(boolean notify)
 	{
-		super(false);
+		super(notify);
 	}
 
 	@Override
@@ -125,8 +125,8 @@ public class WorldGenJuniperTree extends WorldGenAbstractTree
                 {
                 	if(rand.nextInt(12) < 5)
                 	{
-                    	x += facing.getFrontOffsetX();
-                    	z += facing.getFrontOffsetZ();
+                    	x += facing.getXOffset();
+                    	z += facing.getZOffset();
                 	}
                 	
                 	if(rand.nextInt(6) < 5)
@@ -177,8 +177,8 @@ public class WorldGenJuniperTree extends WorldGenAbstractTree
             IBlockState state = world.getBlockState(pos);
             for(int h = 0; h <= length; h++)
             {
-            	x += facing.getFrontOffsetX();
-            	z += facing.getFrontOffsetZ();
+            	x += facing.getXOffset();
+            	z += facing.getZOffset();
             	
             	if(rand.nextInt(4) < 2)
             		y += 1;
