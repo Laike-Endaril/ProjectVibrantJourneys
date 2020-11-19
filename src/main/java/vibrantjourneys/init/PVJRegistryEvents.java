@@ -1,6 +1,5 @@
 package vibrantjourneys.init;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -15,7 +14,7 @@ import vibrantjourneys.ProjectVibrantJourneys;
 import vibrantjourneys.blocks.BlockMysticalGrill;
 import vibrantjourneys.blocks.wood.BlockPVJDoor;
 import vibrantjourneys.blocks.wood.BlockPVJFenceGate;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
 public class PVJRegistryEvents
 {
@@ -46,11 +45,9 @@ public class PVJRegistryEvents
         {
             ProjectVibrantJourneys.proxy.registerItemRenderer(Item.getItemFromBlock(block));
 
-            if (block instanceof IPropertyHelper)
+            if (block instanceof IModelAllValidBlockstates)
             {
-                IPropertyHelper PVJBlock = (IPropertyHelper) block;
-                ImmutableList<IBlockState> properties = PVJBlock.getProperties();
-                for (IBlockState state : properties)
+                for (IBlockState state : block.getBlockState().getValidStates())
                 {
                     int meta = block.getMetaFromState(state);
                     ModelResourceLocation resource = new ModelResourceLocation(block.getRegistryName(), "inventory");

@@ -1,18 +1,16 @@
 package vibrantjourneys.blocks.wood;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
-public class BlockPVJFence extends BlockFence implements IPropertyHelper
+public class BlockPVJFence extends BlockFence implements IModelAllValidBlockstates
 {
     public BlockPVJFence()
     {
@@ -32,11 +30,5 @@ public class BlockPVJFence extends BlockFence implements IPropertyHelper
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
         return Blocks.OAK_FENCE.getFireSpreadSpeed(world, pos, face);
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 }

@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks.wood;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.properties.IProperty;
@@ -11,9 +10,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
-public class BlockPVJLog extends BlockLog implements IPropertyHelper
+public class BlockPVJLog extends BlockLog implements IModelAllValidBlockstates
 {
     public static final PropertyEnum<BlockLog.EnumAxis> LOG_AXIS = PropertyEnum.<BlockLog.EnumAxis>create("axis", BlockLog.EnumAxis.class);
 
@@ -91,11 +90,5 @@ public class BlockPVJLog extends BlockLog implements IPropertyHelper
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[]{LOG_AXIS});
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 }

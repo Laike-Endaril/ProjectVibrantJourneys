@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks.plant;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.*;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -23,13 +22,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import vibrantjourneys.init.PVJBlocks;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 import vibrantjourneys.util.PVJConfig;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockShortGrass extends BlockBush implements IGrowable, IShearable, IPropertyHelper
+public class BlockShortGrass extends BlockBush implements IGrowable, IShearable, IModelAllValidBlockstates
 {
     public static final PropertyInteger MODEL = PropertyInteger.create("model", 0, 6);
 
@@ -185,12 +184,6 @@ public class BlockShortGrass extends BlockBush implements IGrowable, IShearable,
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
         return Blocks.TALLGRASS.getFireSpreadSpeed(world, pos, face);
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 
     @Override

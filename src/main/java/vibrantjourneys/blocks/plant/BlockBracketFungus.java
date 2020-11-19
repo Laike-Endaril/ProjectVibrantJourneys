@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks.plant;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockLog;
@@ -23,12 +22,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import vibrantjourneys.blocks.wood.BlockBark;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockBracketFungus extends BlockHorizontal implements IPropertyHelper
+public class BlockBracketFungus extends BlockHorizontal implements IModelAllValidBlockstates
 {
     public BlockBracketFungus()
     {
@@ -170,11 +169,5 @@ public class BlockBracketFungus extends BlockHorizontal implements IPropertyHelp
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
     {
         return BlockFaceShape.UNDEFINED;
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 }

@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks.wood;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -13,11 +12,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
 import java.util.Random;
 
-public class BlockPVJDoor extends BlockDoor implements IPropertyHelper
+public class BlockPVJDoor extends BlockDoor implements IModelAllValidBlockstates
 {
     private Item doorItem;
 
@@ -56,11 +55,5 @@ public class BlockPVJDoor extends BlockDoor implements IPropertyHelper
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
         return Blocks.OAK_DOOR.getFireSpreadSpeed(world, pos, face);
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 }

@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks.plant;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockLilyPad;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyInteger;
@@ -12,12 +11,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockFloatingPlant extends BlockLilyPad implements IPropertyHelper
+public class BlockFloatingPlant extends BlockLilyPad implements IModelAllValidBlockstates
 {
     public static final PropertyInteger MODEL = PropertyInteger.create("model", 0, 3);
 
@@ -71,11 +70,5 @@ public class BlockFloatingPlant extends BlockLilyPad implements IPropertyHelper
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, MODEL);
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 }

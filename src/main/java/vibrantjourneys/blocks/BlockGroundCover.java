@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -21,12 +20,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockGroundCover extends Block implements IPropertyHelper
+public class BlockGroundCover extends Block implements IModelAllValidBlockstates
 {
     public static final PropertyInteger MODEL = PropertyInteger.create("model", 0, 4);
     private GroundcoverType groundcoverType;
@@ -205,12 +204,6 @@ public class BlockGroundCover extends Block implements IPropertyHelper
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, MODEL);
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 
     public enum GroundcoverType

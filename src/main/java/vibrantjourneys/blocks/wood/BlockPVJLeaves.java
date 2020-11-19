@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks.wood;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
@@ -27,12 +26,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import vibrantjourneys.init.PVJBlocks;
 import vibrantjourneys.init.PVJItems;
 import vibrantjourneys.util.EnumLeafType;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockPVJLeaves extends BlockLeaves implements IPropertyHelper
+public class BlockPVJLeaves extends BlockLeaves implements IModelAllValidBlockstates
 {
     private EnumLeafType leafType;
 
@@ -205,12 +204,6 @@ public class BlockPVJLeaves extends BlockLeaves implements IPropertyHelper
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
         return Blocks.LEAVES.getFireSpreadSpeed(world, pos, face);
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 
     @Override

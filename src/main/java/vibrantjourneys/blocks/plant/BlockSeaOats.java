@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks.plant;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
@@ -21,12 +20,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockSeaOats extends BlockBush implements IPropertyHelper
+public class BlockSeaOats extends BlockBush implements IModelAllValidBlockstates
 {
     public static final PropertyEnum<BlockSeaOats.EnumBlockHalf> HALF = PropertyEnum.<BlockSeaOats.EnumBlockHalf>create("half", BlockSeaOats.EnumBlockHalf.class);
 
@@ -197,12 +196,6 @@ public class BlockSeaOats extends BlockBush implements IPropertyHelper
     public Block.EnumOffsetType getOffsetType()
     {
         return Block.EnumOffsetType.XZ;
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 
     public static enum EnumBlockHalf implements IStringSerializable

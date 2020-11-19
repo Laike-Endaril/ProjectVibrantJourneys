@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -19,13 +18,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BlockRockFormation extends Block implements IPropertyHelper
+public class BlockRockFormation extends Block implements IModelAllValidBlockstates
 {
     public static final PropertyInteger SIZE = PropertyInteger.create("size", 0, 2);
     public static final ArrayList<Block> VALID_SPAWN_BLOCKS = new ArrayList<Block>();
@@ -145,11 +144,5 @@ public class BlockRockFormation extends Block implements IPropertyHelper
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[]{SIZE});
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 }

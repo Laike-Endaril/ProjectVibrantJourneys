@@ -4,9 +4,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
-public class BlockFlouropore extends BlockBracketFungus implements IPropertyHelper
+public class BlockFlouropore extends BlockBracketFungus implements IModelAllValidBlockstates
 {
     public BlockFlouropore()
     {

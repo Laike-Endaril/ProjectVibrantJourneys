@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks.plant;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
@@ -17,12 +16,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import vibrantjourneys.init.PVJBlocks;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockWeed extends BlockPVJPlant implements IShearable, IPropertyHelper
+public class BlockWeed extends BlockPVJPlant implements IShearable, IModelAllValidBlockstates
 {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
@@ -102,11 +101,5 @@ public class BlockWeed extends BlockPVJPlant implements IShearable, IPropertyHel
     public Block.EnumOffsetType getOffsetType()
     {
         return Block.EnumOffsetType.XZ;
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 }

@@ -1,6 +1,5 @@
 package vibrantjourneys.blocks.wood;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -17,12 +16,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import vibrantjourneys.util.EnumLeafType;
 import vibrantjourneys.util.EnumWoodType;
-import vibrantjourneys.util.IPropertyHelper;
+import vibrantjourneys.util.IModelAllValidBlockstates;
 import vibrantjourneys.worldgen.feature.*;
 
 import java.util.Random;
 
-public class BlockPVJSapling extends BlockBush implements IGrowable, IPropertyHelper
+public class BlockPVJSapling extends BlockBush implements IGrowable, IModelAllValidBlockstates
 {
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
     protected static final AxisAlignedBB SAPLING_AABB =
@@ -298,11 +297,5 @@ public class BlockPVJSapling extends BlockBush implements IGrowable, IPropertyHe
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[]{STAGE});
-    }
-
-    @Override
-    public ImmutableList<IBlockState> getProperties()
-    {
-        return this.blockState.getValidStates();
     }
 }
