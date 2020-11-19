@@ -4,15 +4,12 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
@@ -25,7 +22,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import vibrantjourneys.util.IPropertyHelper;
-import vibrantjourneys.util.PVJConfig;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -39,15 +35,12 @@ public class BlockGroundCover extends Block implements IPropertyHelper
     {
         super(material);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MODEL, 0));
-        if (material == Material.VINE)
-            this.setSoundType(SoundType.PLANT);
-        else if (type == GroundcoverType.TWIGS || type == GroundcoverType.PINECONES)
-            this.setSoundType(SoundType.WOOD);
+        if (material == Material.VINE) this.setSoundType(SoundType.PLANT);
+        else if (type == GroundcoverType.TWIGS || type == GroundcoverType.PINECONES) this.setSoundType(SoundType.WOOD);
         this.groundcoverType = type;
-        this.setHardness(0.1F);
+        this.setHardness(0F);
 
-        if (type == GroundcoverType.TWIGS || type == GroundcoverType.PINECONES)
-            Blocks.FIRE.setFireInfo(this, 30, 60);
+        if (type == GroundcoverType.TWIGS || type == GroundcoverType.PINECONES) Blocks.FIRE.setFireInfo(this, 30, 60);
     }
 
     public GroundcoverType getGroundcoverType()
@@ -58,8 +51,7 @@ public class BlockGroundCover extends Block implements IPropertyHelper
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        if (this.getGroundcoverType() == GroundcoverType.FLOWER_PATCH)
-            return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.01D, 1.0D);
+        if (this.getGroundcoverType() == GroundcoverType.FLOWER_PATCH) return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.01D, 1.0D);
 
         return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
     }
@@ -98,7 +90,7 @@ public class BlockGroundCover extends Block implements IPropertyHelper
     @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
-        return super.canPlaceBlockAt(worldIn, pos) ? this.canBlockStay(worldIn, pos) : false;
+        return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos);
     }
 
     @Override
@@ -131,8 +123,7 @@ public class BlockGroundCover extends Block implements IPropertyHelper
     @Override
     public boolean isTranslucent(IBlockState state)
     {
-        if (this.getGroundcoverType() == GroundcoverType.FLOWER_PATCH)
-            return true;
+        if (this.getGroundcoverType() == GroundcoverType.FLOWER_PATCH) return true;
 
         return super.isTranslucent(state);
     }
@@ -141,8 +132,7 @@ public class BlockGroundCover extends Block implements IPropertyHelper
     @Override
     public BlockRenderLayer getBlockLayer()
     {
-        if (this.getGroundcoverType() == GroundcoverType.FLOWER_PATCH)
-            return BlockRenderLayer.TRANSLUCENT;
+        if (this.getGroundcoverType() == GroundcoverType.FLOWER_PATCH) return BlockRenderLayer.TRANSLUCENT;
 
         return super.getBlockLayer();
     }
@@ -160,34 +150,13 @@ public class BlockGroundCover extends Block implements IPropertyHelper
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote)
+        if (player.isCreative())
         {
+            if (!world.isRemote) world.setBlockState(pos, getStateFromMeta((getMetaFromState(state) + 1) % 5));
             return true;
         }
-        else
-        {
-            if (player.isSneaking() && PVJConfig.misc.shiftRightClickGroundCover)
-            {
-                ItemStack stack = new ItemStack(this, 1, 0);
-                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-                world.setBlockToAir(pos);
-            }
-            else
-            {
-                if (player.isCreative())
-                {
-                    int meta = getMetaFromState(state);
-                    if (meta != 4)
-                        meta++;
-                    else
-                        meta = 0;
 
-                    world.setBlockState(pos, getStateFromMeta(meta));
-                }
-            }
-        }
-
-        return true;
+        return false;
     }
 
     @Override
@@ -205,14 +174,7 @@ public class BlockGroundCover extends Block implements IPropertyHelper
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        if (this.getGroundcoverType() == GroundcoverType.TWIGS)
-        {
-            if (rand.nextBoolean())
-            {
-                return Items.STICK;
-            }
-        }
-        return Items.AIR;
+        return null;
     }
 
     @Override
@@ -236,13 +198,13 @@ public class BlockGroundCover extends Block implements IPropertyHelper
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return state.getValue(MODEL).intValue();
+        return state.getValue(MODEL);
     }
 
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[]{MODEL});
+        return new BlockStateContainer(this, MODEL);
     }
 
     @Override
@@ -251,7 +213,7 @@ public class BlockGroundCover extends Block implements IPropertyHelper
         return this.blockState.getValidStates();
     }
 
-    public static enum GroundcoverType
+    public enum GroundcoverType
     {
         TWIGS,
         ROCKS,
